@@ -9,11 +9,10 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import icon from "astro-icon";
 import opengraphImages, { presets } from "astro-opengraph-images";
-// import fs from 'fs';
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://www.chilldude.me",
+  site: "https://astrofolio.pages.dev",
   integrations: [
     mdx({
       image: {
@@ -52,7 +51,7 @@ export default defineConfig({
       include: {
         "fa6-solid": ["rss", "circle-half-stroke"],
         tabler: ["mail-filled"],
-        "fa6-brands": ["x-twitter", "github", "instagram", "linkedin-in", "youtube"],
+        "fa6-brands": ["x-twitter", "github", "instagram", "linkedin-in"],
       },
     }),
     sitemap(),
