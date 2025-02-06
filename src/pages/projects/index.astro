@@ -1,0 +1,91 @@
+---
+import Base from "../../layouts/Base.astro";
+
+const projects = [
+  
+  {
+    title: "Fleet Tracking and Management System",
+    year: 2025,
+    description: "Took part in the engineering team to optimize route calculations and on route check algorithms.",
+    url: "https://www.izmirteknoloji.com.tr/tr/projeDetay/Filo%20Takip%20ve%20Y%C3%B6netim%20Sistemi"
+  },
+  {
+    title: "Smart Stops Project",
+    year: 2024,
+    description: "Engineered a Yocto Linux based smart bus stop board to provide real-time bus arrival information in smart stops of Izmir.",
+    url: "https://www.izmirteknoloji.com.tr/tr/projeDetay/Ak%C4%B1ll%C4%B1%20Duraklar"
+  },
+  {
+    title: "WRO2024 Izmir Chatbot",
+    year: 2024,
+    description: "Designed and launched the WRO2024 Izmir Chatbot in under one week, managing the entire process as Product Manager. The chatbot enhanced participant experience by streamlining guidance for event attendees, significantly improving engagement and support for WRO2024 participants."
+  },
+  {
+    title: "Fair Assistant",
+    year: 2024,
+    description: "Developed a Next.js-based web application to guide guests of the 93rd Izmir International Fair, providing real-time answers to event-related questions such as 'What concerts do we have today?'. The project was built in under two weeks, utilizing Next.js, Redis, and Docker for fast deployment and efficient performance.",
+    url: "https://ai.izmirteknoloji.com.tr/fuar-asistani",
+  },
+  {
+    title: "Embedded Systems Project: Telepathy",
+    year: 2024,
+    description:
+      "Integrating neuroscience, embedded systems, and interactive tech to control a parkour game with muscle signals. Explore how EMG captures and interprets muscle activity for real-time game control on a 16x2 LCD screen.",
+    url: "https://github.com/chillmatin/Telepathy",
+  },
+  {
+    title: "Pupil Dilation Detection",
+    year: 2024,
+    description:
+      "Implemented a pupil detection algorithm for detecting pupil size and dilation.",
+    url: "https://altugdidikoglu.github.io/lab",
+  },
+  {
+    title: "AI Assistant Project: Multi-Agent System for Contextual Query Handling",
+    year: 2024,
+    description:
+      "RAG LLM Agent architecture for answering company related questions based on the information provided by the company. This is the project we made in Kuika AI Hackathon as Finetuners team.",
+    url: "https://github.com/chillmatin/rag-question-answering-model",
+  },
+  {
+    title: "Texnobil Media",
+    year: 2024,
+    description: "A Youtube channel sharing educational videos about technology, science, and art in Azerbaijani language.",
+    url: "https://www.youtube.com/@texnobil"
+  }
+];
+
+const title = "Projects";
+const description = "My Projects";
+---
+
+<Base title={title} description={description}>
+  <section>
+    <h1 class="mb-8 text-2xl font-medium tracking-tight">Projects</h1>
+    <div class="space-y-6">
+      {
+        projects.map((project, index) => (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block group hover:opacity-80 transition-opacity duration-200">
+            <div class="flex flex-col">
+              <div class="w-full flex justify-between items-baseline">
+                <span class="text-black dark:text-white font-medium tracking-tight">
+                  {project.title}
+                </span>
+                <span class="text-neutral-600 dark:text-neutral-400 tabular-nums text-sm">
+                  {project.year}
+                </span>
+              </div>
+              <p class="prose prose-neutral dark:prose-invert pt-3">
+                {project.description}
+              </p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Base>
