@@ -14,4 +14,4 @@ export const socialLinks = {
   linkedin: "https://www.linkedin.com/in/chillmatin/",
   email: "mailto:matinhuseynzade@gmail.com",
   youtube: "https://www.youtube.com/@chilldude1337"
-};
+  };
