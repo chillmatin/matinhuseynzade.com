@@ -12,7 +12,7 @@ import opengraphImages, { presets } from "astro-opengraph-images";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://astrofolio.pages.dev",
+  site: "https://www.chilldude.me",
   integrations: [
     mdx({
       image: {
@@ -51,7 +51,7 @@ export default defineConfig({
       include: {
         "fa6-solid": ["rss", "circle-half-stroke"],
         tabler: ["mail-filled"],
-        "fa6-brands": ["x-twitter", "github", "instagram", "linkedin-in"],
+        "fa6-brands": ["x-twitter", "github", "instagram", "linkedin-in", "youtube"],
       },
     }),
     sitemap(),
