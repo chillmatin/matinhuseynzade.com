@@ -9,6 +9,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import icon from "astro-icon";
 import opengraphImages, { presets } from "astro-opengraph-images";
+import fs from "node:fs";
 
 // https://astro.build/config
 export default defineConfig({
@@ -60,8 +61,6 @@ export default defineConfig({
       options: {
         fonts: [
           {
-            name: "Roboto",
-            name: "Roboto",
             name: "Roboto",
             weight: 400,
             style: "normal",

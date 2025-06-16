@@ -28,6 +28,7 @@
     "astro-seo": "^0.8.4",
     "astro-themes": "^0.2.5",
     "astro-tweet": "^0.0.4",
+    "caniuse-lite": "^1.0.30001723",
     "katex": "^0.16.11",
     "lenis": "^1.1.14",
     "mdx": "^0.3.1",

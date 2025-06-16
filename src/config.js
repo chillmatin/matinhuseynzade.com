@@ -4,7 +4,7 @@ export const metaData = {
   name: "Matin",
   ogImage: "/opengraph-image.png",
   description:
-    "A clean, fast, and lightweight portfolio template built with Next.js, Vercel, and Tailwind CSS for optimal performance.",
+    "Personal blog of Matin Huseynzade, a software engineer and tech enthusiast. Explore articles on web development, programming, and technology.",
 };
 
 export const socialLinks = {
