@@ -8,7 +8,7 @@ export const metaData = {
 };
 
 export const socialLinks = {
-  // twitter: "https://x.com/chillmatin",
+  twitter: "https://x.com/chilldudelogs",
   github: "https://github.com/chillmatin",
   instagram: "https://www.instagram.com/chilldude.me",
   linkedin: "https://www.linkedin.com/in/chillmatin/",
