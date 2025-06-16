@@ -1,90 +1,77 @@
 ---
 import Base from "../layouts/Base.astro";
 import { socialLinks } from "../config";
+import { getCollection } from "astro:content";
+import FormattedDate from "../components/FormattedDate.astro";
 import { Image } from "astro:assets";
+
+const blogPosts = (await getCollection("blog")).sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 ---
 
 <Base>
-  <section>
-    <a href={socialLinks.twitter} target="_blank">
+  <section class="max-w-[720px] w-full mx-auto space-y-12">
+
+    <!-- Profile Intro -->
+    <div class="flex items-center gap-5">
       <Image
         src="/profile.jpg"
         alt="Profile photo"
-        class="rounded-full bg-gray-100 block lg:mt-5 mt-0 lg:mb-5 mb-10 mx-auto sm:float-right sm:ml-5 sm:mb-5 grayscale hover:grayscale-0"
-        width={160}
-        height={160}
+        class="w-20 h-20 rounded-full grayscale hover:grayscale-0"
+        width={80}
+        height={80}
       />
-    </a>
-
-    <h1 class="mb-8 text-2xl font-medium tracking-tight">
-      Matin Huseynzade
-    </h1>
-    <div class="prose prose-neutral dark:prose-invert">
-      <p class="subtitle">
-        Data Scientist at  
-        <a href="https://www.izmirteknoloji.com.tr" target="_blank">İzmir İnovasyon ve Teknoloji A.Ş.</a>, an affiliate of the 
-        <a href="https://www.izmir.bel.tr/" target="_blank">Izmir Metropolitan Municipality</a>.
-      </p>
-
-      <p>
-        Over the course of 8 years, I have developed expertise in diverse areas of computer science, including web development, cybersecurity, heterogeneous parallel computation systems, machine learning, and open-source software. 
-
-      </p>
-
-      <p>
-        I have also been actively involved in volunteer work—translating for 
-        <a href="https://az.khanacademy.org/" target="_blank">Khan Academy Azerbaijani</a>, participating in university communities, and serving as chairperson in 
-        <a href="https://ieee.iyte.edu.tr/komiteler/computer-society/" target="_blank">the IZTECH IEEE Computer Society</a> for a school year. 
-      </p>
-      <p>
-        Senior Computer Engineering student at 
-        <a href="https://ceng.iyte.edu.tr/" target="_blank">Izmir Institute of Technology</a>.
-      </p>
-      </section>
-</Base>
-
-
-
-<!-- 
-<div class="prose prose-neutral dark:prose-invert">
-      <p>
-        Software Engineer at İzmir İnovasyon ve Teknoloji A.Ş. 
-      </p>
-      <p>
-        Astrofolio includes all the essentials for a stunning portfolio: SEO,
-        MDX support, RSS, Atom, & JSON feeds, analytics, tweet & YouTube embeds,
-        KaTeX integration, and{""}
-        <a
-          target="_blank"
-          href="https://github.com/vikas5914/Astrofolio?tab=readme-ov-file#features">
-          more
-        </a>
-        .
-      </p>
-      <p>
-        Astrofolio is{" "}
-        <a href={socialLinks.github} target="_blank"> open-source </a>{" "}
-        and fully customizable, making it easy to add more features.
-      </p>
-      <p>
-        <a
-          href="https://vercel.com/new/clone?repository-url=https://github.com/vikas5914/Astrofolio"
-          target="_blank">
-          Deploy
-        </a>{" "}
-        your Astrofolio site with Vercel in minutes and follow the set up instructions
-        in the{" "}
-        <a href="/blog/getting-started">Getting Started</a> post.
-      </p>
-      <p>
-        Next.js built and maintained by{" "}
-        <a href="https://imsirius.xyz/" target="_blank"> Sirius </a>
-        <br />
-        Astro buit and maintained by <a
-          href="https://kapadiya.net/"
-          target="_blank">
-          Vikas
-        </a> .
-      </p>
+      <div>
+        <h1 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+          Hey, I'm Matin.
+        </h1>
+        <p class="text-sm text-neutral-600 dark:text-neutral-400">
+          Engineer. Systems Thinker. Occasional Photographer.
+        </p>
+      </div>
     </div>
--->
+
+    <!-- Bio -->
+    <p class="text-base leading-relaxed text-neutral-700 dark:text-neutral-300">
+      A quiet place for unfinished thoughts — in software, in life, in between.
+    </p>
+
+    <!-- Start Here -->
+    <div>
+      <h2 class="text-xl font-semibold tracking-wide uppercase text-neutral-600 dark:text-neutral-400 mb-3">
+        Start Here
+      </h2>
+      <ul class="list-disc list-inside space-y-1 text-neutral-800 dark:text-neutral-200">
+        <li><a href="/blog/why" class="text-blue-600 dark:text-blue-400 hover:underline">Why I Write →</a></li>
+        <li><a href="/projects" class="text-blue-600 dark:text-blue-400 hover:underline">Project Archive →</a></li>
+        <li><a href="/photos" class="text-blue-600 dark:text-blue-400 hover:underline">Gallery →</a></li>
+      </ul>
+    </div>
+
+    <!-- Latest Posts -->
+    <div>
+      <h2 class="text-xl font-semibold tracking-wide uppercase text-neutral-600 dark:text-neutral-400 mb-3">
+        Latest Posts
+      </h2>
+      <ul class="space-y-4">
+        {
+          blogPosts.slice(0, 3).map(post => (
+            <li>
+              <a href={`/blog/${post.slug}`} class="text-lg font-medium text-neutral-800 dark:text-neutral-100 hover:underline">
+                {post.data.title}
+              </a>
+              <div class="text-sm text-neutral-500 dark:text-neutral-400">
+                <FormattedDate date={post.data.publishedAt} />
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Outro / Ethos -->
+    <div class="pt-4 border-t border-neutral-300 dark:border-neutral-800 text-sm text-neutral-600 dark:text-neutral-500">
+      Verba volant, scripta manent.
+    </div>
+
+  </section>
+</Base>
