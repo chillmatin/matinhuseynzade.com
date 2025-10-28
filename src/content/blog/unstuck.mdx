@@ -1,0 +1,67 @@
+---
+title: "Unstuck: Vibe-Coding a Cure for Procrastination"
+publishedAt: "2025-10-29"
+summary: "How a psychology paper from Reddit inspired me to build a minimalist reflection app that helps overcome procrastination — Unstuck."
+tags: "Productivity, Psychology, AI"
+---
+
+import { Image } from "astro:assets";
+import Tweet from "astro-tweet";
+import { YouTube } from '@astro-community/astro-embed-youtube';
+import ImageGrid from "../../components/mdx/ImageGrid.astro";
+import Caption from "../../components/mdx/Caption.astro";
+import Table from "../../components/mdx/Table.astro";
+import Callout from "../../components/mdx/Callout.astro";
+
+> "It is easier to resist at the beginning than at the end." — Leonardo da Vinci
+
+I found a [paper](https://bmcpsychology.biomedcentral.com/articles/10.1186/s40359-025-03388-3/tables/1) on [Reddit](https://www.reddit.com/r/science/comments/1o9ydzp/procrastination_can_decrease_after_a_1minute/) about a **question-based method to overcome procrastination**. I tried the six prompts and found them effective.
+
+<details>
+<summary style="cursor: pointer; font-weight: 500; margin: 1.5rem 0 0.5rem 0;">Here are the questions: [^1]</summary>
+
+1. What task are you currently procrastinating on?  
+2. Provide a brief description of the task. Why are you avoiding it?  
+3. What are the benefits of completing this task?  
+4. Tasks can be broken down into subtasks. Name one easy subtask you can complete.  
+5. How long will it take you to complete this subtask (in minutes)?  
+6. Name a small reward for completing the subtask.
+
+</details>
+
+Then, I decided to build a web app that walks you through them interactively.  
+That’s how **[Unstuck](https://chillmatin.github.io/unstuck)** was born.
+
+---
+
+## How I Built It — “Vibe-Coding” Style
+
+
+1. Explained the problem and product vision to [ChatGPT](https://chatgpt.com/) in detail.  
+2. Asked for a [Lovable](https://www.lovable.dev/) prompt to generate the project skeleton.  
+3. Pasted the prompt into Lovable and iterated on the design.  
+4. Connected [GitHub](https://github.com/) and cloned the repository.  
+5. Used **VS Code Copilot Agent** to refine code, add features, and fix bugs.  
+6. Deployed the app on **GitHub Pages**.
+
+<Image src="/blog/unstuck/unstuck-ui.png" alt="Unstuck app interface" width={1920} height={1080} />
+<Caption>Unstuck app interface</Caption>
+
+
+---
+
+## Try It Yourself
+
+If you often find yourself stuck before starting, give Unstuck a try. It guides you through reflection in under two minutes.
+
+- [**Unstuck**](https://chillmatin.github.io/unstuck) — The app  
+- [**Reddit Post**](#) — Where it all started  
+- [**Research Paper**](https://bmcpsychology.biomedcentral.com/articles/10.1186/s40359-025-03388-3/tables/1) — The original source  
+
+Maybe it’s time to tackle that laundry — Unstuck might help.
+
+<Callout emoji="💭">
+    I’d love your feedback. Try it and tell me what you think via <a href="mailto:matinhuseynzade@gmail.com">email</a> or <a href="https://www.linkedin.com/in/matinhuseynzade/" target="_blank">LinkedIn</a>.
+</Callout>
+
+[^1]: Source: [BMC Psychology Paper](https://bmcpsychology.biomedcentral.com/articles/10.1186/s40359-025-03388-3/tables/1)
