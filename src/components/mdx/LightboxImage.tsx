@@ -1,14 +1,23 @@
 import { useEffect, useState } from "react";
-import { getGlobalGallery } from "./globalGallery";
+import { useGallery } from "./useGallery";
+import type { LightboxImageProps } from "./types";
 
-interface LightboxImageProps {
-  src: string;
-  alt: string;
-  width?: number;
-  height?: number;
-  className?: string;
-}
-
+/**
+ * LightboxImage - Individual image with lightbox on click
+ * 
+ * Renders an image that registers itself with the global gallery.
+ * Clicking the image opens the unified lightbox showing all images on the page.
+ * 
+ * @example
+ * ```tsx
+ * <LightboxImage
+ *   src="/image.jpg"
+ *   alt="Description"
+ *   width={640}
+ *   height={480}
+ * />
+ * ```
+ */
 export default function LightboxImage({
   src,
   alt,
@@ -16,17 +25,17 @@ export default function LightboxImage({
   height,
   className = "",
 }: LightboxImageProps) {
+  const { registerImage, openGallery } = useGallery();
   const [imageIndex, setImageIndex] = useState<number>(-1);
 
   useEffect(() => {
-    const gallery = getGlobalGallery();
-    const index = gallery.registerImage({ src, alt });
+    const index = registerImage({ src, alt });
     setImageIndex(index);
-  }, [src, alt]);
+  }, [src, alt, registerImage]);
 
   const handleClick = () => {
     if (imageIndex >= 0) {
-      getGlobalGallery().openGallery(imageIndex);
+      openGallery(imageIndex);
     }
   };
 
