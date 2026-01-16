@@ -6,6 +6,7 @@ tags: "Brainstorming, Philosophy, AI"
 ---
 
 import { Image } from "astro:assets";
+import LightboxImage from "../../components/mdx/LightboxImage";
 import Tweet from "astro-tweet";
 import { YouTube } from '@astro-community/astro-embed-youtube';
 import ImageGrid from "../../components/mdx/ImageGrid.astro";
@@ -25,7 +26,7 @@ The question "Why?" sounds so simple yet it has many deep layers to it. Richard 
 
 What he basically says is that asking why requires one to know the framework by which the answer is expected. Being well-acquainted with our frameworks might be the step towards asking the best why questions. This leads us to self-criticism. Criticizing ourselves based on asking proper why questions is essential. So, when asking the question, we assume the answer to these two questions: What do I know? What do I want to know? It is sort of like going from point A to point B in our mental world. Let’s examine a sample question: Why is the sky blue?[^2] There could be many layers of answers to this question, but normally we can simplify it into these two questions. What do I know? Well, you might say, I am just a high school student with basic knowledge of physics, optics, colors, etc. You might also say that you know what the sky is and the fact that the sky is blue. You just lack the logical path and connections between these two mental points: physics knowledge and basic facts such as the blueness of the sky.
 
-![Novak, J. D. & A. J. Cañas, The Theory Underlying Concept Maps and How to Construct and Use Them, Technical Report IHMC CmapTools 2006-01 Rev 01-2008, Florida Institute for Human and Machine Cognition, 2008, available at here](/blog/concept-maps.jpg)
+<LightboxImage src="/blog/concept-maps.jpg" alt="Novak, J. D. & A. J. Cañas, The Theory Underlying Concept Maps and How to Construct and Use Them, Technical Report IHMC CmapTools 2006-01 Rev 01-2008, Florida Institute for Human and Machine Cognition, 2008" width={800} height={600} client:idle />
 
 After knowing the answers to these two questions, we understand the framework of the "why." Returning to the _meaning_ argument, knowing the listener's framework is crucial for conveying the intended meaning. What if the listener's assumed knowledge is wrong or insufficient? Well, the listener will not be able to mentally connect the points. Our thought processes are optimized for these situations too. When we encounter information contradictory to our mental map of knowledge, we start to question our assumed knowledge. Correcting these erroneous or incomplete assumptions helps us understand things better and quicker, as it refines our knowledge maps. This approach really resembles the way Deep Neural Networks[^3] improve themselves through backpropagation algorithms.
 <YouTube id="Ilg3gGewQ5U" />

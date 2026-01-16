@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "yet-another-react-lightbox/styles.css";
+@import "yet-another-react-lightbox/plugins/thumbnails.css";
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 @plugin "@tailwindcss/typography";
 
@@ -150,4 +152,19 @@ blockquote p:first-of-type::after {
   font-style: var(--shiki-dark-font-style) !important;
   font-weight: var(--shiki-dark-font-weight) !important;
   text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+/* Lightbox dark mode customization */
+[data-theme="dark"] .yarl__root {
+  --yarl__color_backdrop: rgba(0, 0, 0, 0.95);
+  --yarl__color_button: rgba(255, 255, 255, 0.8);
+  --yarl__color_button_active: rgba(255, 255, 255, 1);
+  --yarl__color_button_disabled: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="light"] .yarl__root {
+  --yarl__color_backdrop: rgba(0, 0, 0, 0.9);
+  --yarl__color_button: rgba(255, 255, 255, 0.8);
+  --yarl__color_button_active: rgba(255, 255, 255, 1);
+  --yarl__color_button_disabled: rgba(255, 255, 255, 0.3);
 }

@@ -7,6 +7,7 @@ tags: "Hackathon, Micro SaaS, Team SaaSsy, Rashot, Google, Google Developer Grou
 
 import { Image } from "astro:assets";
 import ImageGrid from "../../components/mdx/ImageGrid.astro";
+import LightboxImage from "../../components/mdx/LightboxImage";
 import Caption from "../../components/mdx/Caption.astro";
 import Callout from "../../components/mdx/Callout.astro";
 
@@ -24,16 +25,16 @@ Big thanks to [Fidan Azimova](https://www.linkedin.com/in/fidan-azimova/) and [V
 
 ## Event Photos
 
-<Image
+<LightboxImage
   src="/blog/gdg-baku-hackathon-micro-saas/winners.jpeg"
   alt="Team SaaSsy"
   width={640}
   height={500}
+  client:idle
 />
 
 <ImageGrid
-  columns={2}
-  images={[
+  columns={2}  lightbox={true}  images={[
     { src: "/blog/gdg-baku-hackathon-micro-saas/talk.jpeg", alt: "Team presentation" },
     { src: "/blog/gdg-baku-hackathon-micro-saas/team-selfie.jpeg", alt: "Rashot demo in action" },
     { src: "/blog/gdg-baku-hackathon-micro-saas/prizes.jpeg", alt: "Team celebration" },
@@ -41,11 +42,12 @@ Big thanks to [Fidan Azimova](https://www.linkedin.com/in/fidan-azimova/) and [V
   ]}
 />
 
-<Image
+<LightboxImage
   src="/blog/gdg-baku-hackathon-micro-saas/collective.jpeg"
   alt="Group photo with all participants"
   width={640}
   height={500}
+  client:idle
 />
 
 <Caption>

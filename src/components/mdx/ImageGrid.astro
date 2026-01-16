@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import LightboxGallery from "./LightboxGallery";
 
 interface ImageGridProps {
   images: {
@@ -8,9 +9,10 @@ interface ImageGridProps {
     href?: string;
   }[];
   columns?: 2 | 3 | 4;
+  lightbox?: boolean;
 }
 
-const { images, columns = 3 } = Astro.props as ImageGridProps;
+const { images, columns = 3, lightbox = false } = Astro.props as ImageGridProps;
 
 const gridClass = {
   2: "grid-cols-2 sm:grid-cols-2",
@@ -20,16 +22,28 @@ const gridClass = {
 ---
 
 <section>
-  <div class={`grid ${gridClass} gap-4 my-8`}>
-    {
-      images.map((image) => (
-        <div class="relative aspect-square">
-          {image.href ? (
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={image.href}
-              class="block w-full h-full">
+  {
+    lightbox ? (
+      <LightboxGallery images={images} columns={columns} client:idle />
+    ) : (
+      <div class={`grid ${gridClass} gap-4 my-8`}>
+        {images.map((image) => (
+          <div class="relative aspect-square">
+            {image.href ? (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={image.href}
+                class="block w-full h-full">
+                <Image
+                  alt={image.alt}
+                  src={image.src}
+                  width={500}
+                  height={500}
+                  class="rounded-lg object-cover w-full h-full"
+                />
+              </a>
+            ) : (
               <Image
                 alt={image.alt}
                 src={image.src}
@@ -37,18 +51,10 @@ const gridClass = {
                 height={500}
                 class="rounded-lg object-cover w-full h-full"
               />
-            </a>
-          ) : (
-            <Image
-              alt={image.alt}
-              src={image.src}
-              width={500}
-              height={500}
-              class="rounded-lg object-cover w-full h-full"
-            />
-          )}
-        </div>
-      ))
-    }
-  </div>
+            )}
+          </div>
+        ))}
+      </div>
+    )
+  }
 </section>
