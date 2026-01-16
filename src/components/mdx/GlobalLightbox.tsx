@@ -6,15 +6,26 @@ import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import { getGlobalGallery } from "./globalGallery";
+import type { GalleryImage } from "./types";
+import { LIGHTBOX_CONFIG } from "./types";
 
+/**
+ * GlobalLightbox - Unified lightbox component for all page images
+ * 
+ * Displays a single lightbox instance that manages all images registered
+ * via LightboxImage and LightboxGallery components. Listens to global
+ * gallery events and updates the displayed image set.
+ * 
+ * Should be placed once in the layout, typically at the end of the page.
+ */
 export default function GlobalLightbox() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [images, setImages] = useState<Array<{ src: string; alt: string }>>([]);
+  const [images, setImages] = useState<GalleryImage[]>([]);
 
   useEffect(() => {
     const gallery = getGlobalGallery();
-    
+
     // Subscribe to gallery updates
     const unsubscribe = gallery.subscribe((updatedImages) => {
       setImages(updatedImages);
@@ -42,20 +53,13 @@ export default function GlobalLightbox() {
       slides={images}
       index={currentIndex}
       plugins={[Fullscreen, Zoom, Thumbnails]}
-      zoom={{
-        maxZoomPixelRatio: 3,
-        scrollToZoom: true,
-      }}
-      controller={{
-        closeOnBackdropClick: true,
-      }}
+      zoom={LIGHTBOX_CONFIG.zoom}
+      controller={LIGHTBOX_CONFIG.controller}
       on={{
         view: ({ index }) => setCurrentIndex(index),
       }}
-      animation={{ fade: 250 }}
-      carousel={{
-        finite: false,
-      }}
+      animation={LIGHTBOX_CONFIG.animation}
+      carousel={LIGHTBOX_CONFIG.carousel}
     />
   );
 }
