@@ -37,6 +37,11 @@ export const LIGHTBOX_CONFIG = {
   controller: {
     closeOnBackdropClick: true,
   },
-  animation: { fade: 250 },
-  carousel: { finite: false },
+  // Snap instantly between slides (no swipe/fade) for maximal perceived smoothness
+  animation: {
+    fade: 0,
+    swipe: 0,
+  },
+  // Preload neighboring slides so the next/prev image is decoded before we animate
+  carousel: { finite: false, preload: 2 },
 } as const;
