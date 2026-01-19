@@ -48,6 +48,8 @@ export default function LightboxImage({
       className={`rounded-lg cursor-pointer hover:opacity-90 transition-opacity ${className}`}
       onClick={handleClick}
       loading="lazy"
+      decoding="async"
+      sizes="(min-width: 1024px) 800px, 100vw"
     />
   );
 }

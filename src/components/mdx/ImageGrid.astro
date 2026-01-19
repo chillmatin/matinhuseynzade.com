@@ -40,6 +40,9 @@ const gridClass = {
                   src={image.src}
                   width={500}
                   height={500}
+                  loading="lazy"
+                  decoding="async"
+                  sizes="(min-width: 1024px) 300px, (min-width: 768px) 45vw, 90vw"
                   class="rounded-lg object-cover w-full h-full"
                 />
               </a>
@@ -49,6 +52,9 @@ const gridClass = {
                 src={image.src}
                 width={500}
                 height={500}
+                loading="lazy"
+                decoding="async"
+                sizes="(min-width: 1024px) 300px, (min-width: 768px) 45vw, 90vw"
                 class="rounded-lg object-cover w-full h-full"
               />
             )}
