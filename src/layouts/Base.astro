@@ -38,8 +38,23 @@ const { title, description, image } = Astro.props;
       title="Your Site's Title"
       href={new URL("rss.xml", Astro.site)}
     />
-    <script>
-      import "@scripts/lenisSmoothScroll.js";
+    <script type="module">
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      const loadLenis = () =>
+        import("@scripts/lenisSmoothScroll.js").then((m) => (m.initLenis || m.default)?.());
+
+      if (!prefersReduced.matches) {
+        if ("requestIdleCallback" in window) {
+          requestIdleCallback(loadLenis);
+        } else {
+          setTimeout(loadLenis, 0);
+        }
+      }
+
+      prefersReduced.addEventListener("change", (event) => {
+        if (!event.matches) loadLenis();
+      });
     </script>
   </head>
   <body
