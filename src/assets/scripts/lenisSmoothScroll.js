@@ -2,12 +2,26 @@ import "@styles/lenis.css";
 
 import Lenis from "lenis";
 
-// Script to handle Lenis library settings for smooth scrolling
-const lenis = new Lenis();
+let lenisInstance;
+let rafId;
 
-function raf(time) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
+// Initialize Lenis only when motion is allowed and not already running
+export function initLenis() {
+  if (typeof window === "undefined" || lenisInstance) return lenisInstance;
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (prefersReducedMotion.matches) return undefined;
+
+  const lenis = new Lenis();
+
+  const raf = (time) => {
+    lenis.raf(time);
+    rafId = requestAnimationFrame(raf);
+  };
+
+  rafId = requestAnimationFrame(raf);
+  lenisInstance = { lenis, destroy: () => rafId && cancelAnimationFrame(rafId) };
+  return lenisInstance;
 }
 
-requestAnimationFrame(raf);
+export default initLenis;

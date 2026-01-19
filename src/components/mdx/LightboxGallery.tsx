@@ -56,6 +56,9 @@ export default function LightboxGallery({
           src={image.src}
           alt={image.alt}
           className="w-full aspect-square object-cover cursor-pointer hover:opacity-90 transition-opacity rounded-lg"
+          loading="lazy"
+          decoding="async"
+          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           onClick={() => handleImageClick(i)}
         />
       ))}
