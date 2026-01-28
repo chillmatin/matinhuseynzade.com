@@ -8,10 +8,10 @@ export async function GET(context) {
     title: metaData.title,
     description: metaData.description,
     site: context.site,
-    items: posts.map((post) => ({
+    items: await Promise.all(posts.map(async (post) => ({
       ...post.data,
       link: `/blog/${post.slug}/`,
-      content: post.body,
-    })),
+      content: (await post.render()).html,
+    }))),
   });
 }
