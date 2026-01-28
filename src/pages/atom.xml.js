@@ -8,10 +8,9 @@ export async function GET(context) {
     title: metaData.title,
     description: metaData.description,
     site: context.site,
-    items: await Promise.all(posts.map(async (post) => ({
+    items: posts.map((post) => ({
       ...post.data,
       link: `/blog/${post.slug}/`,
-      content: (await post.render()).html,
-    }))),
+    })),
   });
 }
