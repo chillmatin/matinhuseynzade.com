@@ -33,6 +33,42 @@ function preprocessMDX(mdxContent) {
   return content.trim();
 }
 
+// Extract all images from MDX content (handles LightboxImage and ImageGrid components)
+function extractAllImages(mdxContent) {
+  const images = [];
+  
+  // Find all LightboxImage components
+  const lightboxRegex = /<LightboxImage\s+src=["']([^"']+)["']/g;
+  let lightboxMatch;
+  while ((lightboxMatch = lightboxRegex.exec(mdxContent)) !== null) {
+    images.push(lightboxMatch[1]);
+  }
+  
+  // Find all ImageGrid component images
+  const imageGridRegex = /images=\{?\s*\[\s*({[^}]*src:\s*["']([^"']+)["'][^}]*},?)+/g;
+  const gridMatches = mdxContent.matchAll(imageGridRegex);
+  for (const gridMatch of gridMatches) {
+    // Extract all src values from this ImageGrid
+    const gridContent = gridMatch[0];
+    const srcRegex = /src:\s*["']([^"']+)["']/g;
+    let srcMatch;
+    while ((srcMatch = srcRegex.exec(gridContent)) !== null) {
+      images.push(srcMatch[1]);
+    }
+  }
+  
+  // Fallback: find regular img tags if no components found
+  if (images.length === 0) {
+    const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/g;
+    let imgMatch;
+    while ((imgMatch = imgRegex.exec(mdxContent)) !== null) {
+      images.push(imgMatch[1]);
+    }
+  }
+  
+  return [...new Set(images)]; // Remove duplicates
+}
+
 export async function GET(context) {
   const now = Date.now();
   
@@ -49,23 +85,65 @@ export async function GET(context) {
   // Generate fresh feed
   const posts = await getCollection("blog");
   
-  const items = posts.map((post) => ({
-    ...post.data,
-    link: `/blog/${post.slug}/`,
-    content: sanitizeHtml(parser.render(preprocessMDX(post.body)), {
+  const items = posts.map((post) => {
+    const sanitized = sanitizeHtml(parser.render(preprocessMDX(post.body)), {
       allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img", "details", "summary"]),
       allowedAttributes: {
         ...sanitizeHtml.defaults.allowedAttributes,
+        img: ["src", "alt", "width", "height"],
         summary: ["style"],
       },
-    }),
-  }));
+    });
+    
+    // Extract all images from raw MDX content (before preprocessing)
+    // This captures LightboxImage and ImageGrid components
+    const images = post.data.heroImage 
+      ? [post.data.heroImage] 
+      : extractAllImages(post.body);
+    
+    const itemData = {
+      ...post.data,
+      link: `/blog/${post.slug}/`,
+      content: sanitized,
+    };
+    
+    // Add all images if available - store for later XML manipulation
+    if (images.length > 0) {
+      itemData.images = images.map(img => ({
+        url: img.startsWith('http') ? img : `${context.site}${img}`,
+        type: img.endsWith('.png') ? 'image/png' : 'image/jpeg',
+      }));
+    }
+    
+    return itemData;
+  });
 
-  const rssString = await getRssString({
+  let rssString = await getRssString({
     title: metaData.title,
     description: metaData.description,
     site: context.site,
     items,
+  });
+
+  // Manually inject enclosure tags into RSS items
+  rssString = rssString.replace(/<\/item>/g, (match, offset) => {
+    // Find the corresponding item in the items array by searching backwards
+    const beforeItem = rssString.substring(0, offset);
+    const itemStart = beforeItem.lastIndexOf('<item>');
+    const itemContent = rssString.substring(itemStart, offset);
+    
+    // Find which post this corresponds to based on the link
+    let enclosureTags = '';
+    for (const item of items) {
+      if (itemContent.includes(item.link) && item.images) {
+        enclosureTags = item.images
+          .map(img => `<enclosure url="${img.url}" type="${img.type}" />`)
+          .join('');
+        break;
+      }
+    }
+    
+    return enclosureTags + match;
   });
   
   // Update cache
