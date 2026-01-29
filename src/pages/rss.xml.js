@@ -37,23 +37,31 @@ function preprocessMDX(mdxContent) {
 function extractAllImages(mdxContent) {
   const images = [];
   
-  // Find all LightboxImage components
-  const lightboxRegex = /<LightboxImage\s+src=["']([^"']+)["']/g;
+  // Find all LightboxImage components (can span multiple lines)
+  // Matches <LightboxImage ... src="..." ... /> including multiline
+  const lightboxRegex = /<LightboxImage[\s\S]*?src=["']([^"']+)["'][\s\S]*?\/>/g;
   let lightboxMatch;
   while ((lightboxMatch = lightboxRegex.exec(mdxContent)) !== null) {
-    images.push(lightboxMatch[1]);
+    const img = lightboxMatch[1];
+    if (!images.includes(img)) {
+      images.push(img);
+    }
   }
   
-  // Find all ImageGrid component images
-  const imageGridRegex = /images=\{?\s*\[\s*({[^}]*src:\s*["']([^"']+)["'][^}]*},?)+/g;
-  const gridMatches = mdxContent.matchAll(imageGridRegex);
-  for (const gridMatch of gridMatches) {
-    // Extract all src values from this ImageGrid
-    const gridContent = gridMatch[0];
+  // Find all ImageGrid components and extract ALL src values
+  // First, extract complete ImageGrid blocks (self-closing with />)
+  const imageGridBlockRegex = /<ImageGrid[\s\S]*?\/>/g;
+  const gridBlocks = mdxContent.match(imageGridBlockRegex) || [];
+  
+  for (const block of gridBlocks) {
+    // Extract all src: "..." values from this grid block
     const srcRegex = /src:\s*["']([^"']+)["']/g;
     let srcMatch;
-    while ((srcMatch = srcRegex.exec(gridContent)) !== null) {
-      images.push(srcMatch[1]);
+    while ((srcMatch = srcRegex.exec(block)) !== null) {
+      const img = srcMatch[1];
+      if (!images.includes(img)) {
+        images.push(img);
+      }
     }
   }
   
@@ -62,11 +70,14 @@ function extractAllImages(mdxContent) {
     const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/g;
     let imgMatch;
     while ((imgMatch = imgRegex.exec(mdxContent)) !== null) {
-      images.push(imgMatch[1]);
+      const img = imgMatch[1];
+      if (!images.includes(img)) {
+        images.push(img);
+      }
     }
   }
   
-  return [...new Set(images)]; // Remove duplicates
+  return images;
 }
 
 export async function GET(context) {
@@ -97,9 +108,10 @@ export async function GET(context) {
     
     // Extract all images from raw MDX content (before preprocessing)
     // This captures LightboxImage and ImageGrid components
+    const extractedImages = extractAllImages(post.body);
     const images = post.data.heroImage 
-      ? [post.data.heroImage] 
-      : extractAllImages(post.body);
+      ? [post.data.heroImage, ...extractedImages]
+      : extractedImages;
     
     const itemData = {
       ...post.data,
