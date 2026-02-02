@@ -69,6 +69,7 @@ export default defineConfig({
         ],
       },
       render: presets.rauchg,
+      site: "https://www.matinhuseynzade.com",
     }),
   ],
   output: "static",
