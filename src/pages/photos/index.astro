@@ -1,5 +1,5 @@
 ---
-import ImageGrid from "../../components/mdx/ImageGrid.astro";
+import Gallery from "../../components/mdx/Gallery";
 import Base from "../../layouts/Base.astro";
 
 const title = "Photos";
@@ -9,7 +9,7 @@ const description = "My Photos";
 <Base title={title} description={description}>
   <section>
     <h1 class="mb-8 text-2xl font-medium tracking-tight">Photos</h1>
-    <ImageGrid
+    <Gallery
       columns={3}
       images={[
         {
@@ -104,6 +104,8 @@ const description = "My Photos";
         },
         
       ]}
+      lightbox={false}
+      client:load
     />
 
     <p>
