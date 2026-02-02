@@ -56,7 +56,6 @@ export default defineConfig({
         "fa6-brands": ["x-twitter", "github", "instagram", "linkedin-in", "youtube", "goodreads"],
       },
     }),
-    sitemap(),
     opengraphImages({
       options: {
         fonts: [
@@ -64,7 +63,9 @@ export default defineConfig({
             name: "Roboto",
             weight: 400,
             style: "normal",
-            data: fs.readFileSync("node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff"),
+            data: fs.readFileSync(
+              "node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff"
+            ),
           },
         ],
       },
