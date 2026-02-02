@@ -15,9 +15,33 @@
   color: #fefefe;
 }
 
-/* Dark theme colors */
+/* Page background + color scheme to avoid white flash on transitions */
+:root {
+  color-scheme: light;
+  --page-bg: #ffffff;
+}
+
 [data-theme="dark"] {
-  background-color: #121212;
+  color-scheme: dark;
+  --page-bg: #121212;
+}
+
+html,
+body {
+  background-color: var(--page-bg);
+}
+
+/* Prevent white flash during View Transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  background-color: var(--page-bg);
+  animation-duration: 0.001ms;
+  animation-iteration-count: 1;
+  mix-blend-mode: normal;
+}
+
+::view-transition-group(root) {
+  background-color: var(--page-bg);
 }
 
 html {
