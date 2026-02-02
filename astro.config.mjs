@@ -70,6 +70,7 @@ export default defineConfig({
             ),
           },
         ],
+        site: "matinhuseynzade.com",
       },
     }),
   ],
