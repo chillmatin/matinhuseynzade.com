@@ -3,16 +3,14 @@ import { metaData } from "../config";
 import { Icon } from "astro-icon/components";
 
 const navItems = {
-  "/blog": { name: "Blog" },
-  "/projects": { name: "Projects" },
-  "/photos": { name: "Photos" },
+  "/about": { name: "About" },
 };
 ---
 
 <nav class="lg:mb-16 mb-12 py-5">
   <div class="flex flex-col md:flex-row md:items-center justify-between">
     <div class="flex items-center">
-      <a href="/" class="text-3xl font-semibold">
+      <a href="/" class="text-lg font-semibold transition-opacity duration-200 hover:opacity-80">
         {metaData.title}
       </a>
     </div>

@@ -1,79 +1,38 @@
 ---
 import Base from "../layouts/Base.astro";
-import { socialLinks } from "../config";
 import { getCollection } from "astro:content";
 import FormattedDate from "../components/FormattedDate.astro";
-import { Image } from "astro:assets";
 
-const blogPosts = (await getCollection("blog")).sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
+);
+
+const title = "Blog";
+const description = "Blog posts";
 ---
 
-<Base>
-  <section class="max-w-[720px] w-full mx-auto space-y-12">
-
-    <!-- Profile Intro -->
-    <div class="flex items-center gap-5">
-      <Image
-        src="/profile.jpg"
-        alt="Profile photo"
-        class="w-20 h-20 rounded-full grayscale hover:grayscale-0"
-        width={80}
-        height={80}
-      />
-      <div>
-        <h1 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
-          👋 Hey, I'm Matin.
-        </h1>
-        <p class="text-sm text-neutral-600 dark:text-neutral-400">
-          Engineer. Systems Thinker. Occasional Photographer.
-        </p>
-      </div>
-    </div>
-
-    <!-- Bio -->
-    <p class="text-base leading-relaxed text-neutral-700 dark:text-neutral-300">
-      A quiet place for unfinished thoughts — in software, in life, in between.
-    </p>
-
-    <!-- Start Here -->
+<Base title={title} description={description}>
+  <section>
     <div>
-      <h2 class="text-xl font-semibold tracking-wide uppercase text-neutral-600 dark:text-neutral-400 mb-3">
-        Start Here
-      </h2>
-      <ul class="list-disc list-inside space-y-1 text-neutral-800 dark:text-neutral-200">
-        <li><a href="/blog/why" class="text-blue-600 dark:text-blue-400 hover:underline">Why I Write →</a></li>
-
-      </ul>
-    </div>
-
-    <!-- Latest Posts -->
-    <div>
-      <h2 class="text-xl font-semibold tracking-wide uppercase text-neutral-600 dark:text-neutral-400 mb-3">
-        Latest Posts
-      </h2>
-      <ul class="space-y-4">
-        {
-          blogPosts.slice(0, 3).map(post => (
-            <li>
-              <a href={`/blog/${post.slug}`} class="text-lg font-medium text-neutral-800 dark:text-neutral-100 hover:underline">
+      {
+        posts.map((post) => (
+          <a
+            class="flex flex-col space-y-1 mb-4 transition-opacity duration-200 hover:opacity-80"
+            href={`/blog/${post.slug}`}>
+            <div class="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
+              <p class="text-black dark:text-white tracking-tight">
                 {post.data.title}
-              </a>
-              <div class="text-sm text-neutral-500 dark:text-neutral-400">
-                <FormattedDate date={post.data.publishedAt} />
-              </div>
-            </li>
-          ))
-        }
-      </ul>
+              </p>
+              <p class="text-neutral-600 dark:text-neutral-400 tabular-nums text-sm">
+                <FormattedDate
+                  date={post.data.publishedAt}
+                  includeRelative={false}
+                />
+              </p>
+            </div>
+          </a>
+        ))
+      }
     </div>
-
-    <!-- Outro -->
-    <div class="pt-4 border-t border-neutral-300 dark:border-neutral-800 space-y-2">
-      <p class="text-xs text-neutral-500 dark:text-neutral-600">
-        <span><a href="/pgp-key.asc" class="text-blue-600 dark:text-blue-400 hover:underline">PGP</a>: <code class="font-mono">EA11 C2D1 3003 2BB9 BE6C B693 8E68 5FFA 61FF 5538</code> </span>
-      </p>
-    </div>
-
-    
   </section>
 </Base>
