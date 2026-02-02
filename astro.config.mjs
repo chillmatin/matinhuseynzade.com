@@ -12,7 +12,7 @@ import opengraphImages, { presets } from "astro-opengraph-images";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://www.matinhuseynzade.com",
+  site: "https://matinhuseynzade.com",
   vite: {
     plugins: [tailwindcss()],
   },
