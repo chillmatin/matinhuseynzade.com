@@ -58,20 +58,17 @@ export default defineConfig({
     }),
     sitemap(),
     opengraphImages({
-      render: presets.rauchg,
       options: {
         fonts: [
           {
             name: "Roboto",
-            weight: 700,
+            weight: 400,
             style: "normal",
-            data: fs.readFileSync(
-              "node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff"
-            ),
+            data: fs.readFileSync("node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff"),
           },
         ],
-        site: "matinhuseynzade.com",
       },
+      render: presets.rauchg,
     }),
   ],
   output: "static",
