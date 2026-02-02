@@ -69,7 +69,7 @@ export default defineConfig({
           },
         ],
       },
-      render: presets.simpleBlog,
+      render: presets.rauchg,
     }),
   ],
   output: "static",
