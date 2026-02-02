@@ -1,0 +1,40 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import GlobalLightbox from "../components/mdx/GlobalLightbox";
+import "katex/dist/katex.min.css";
+import { getImagePath } from "astro-opengraph-images";
+
+export async function getStaticPaths() {
+  const pages = await getCollection("pages");
+  return pages.map((page) => ({
+    params: { slug: page.slug },
+    props: page,
+  }));
+}
+type Props = CollectionEntry<"pages">;
+
+const page = Astro.props;
+const { url, site } = Astro;
+const openGraphImageUrl = getImagePath({ url, site });
+const { Content } = await page.render();
+---
+
+<Base title={page.data.title} description={page.data.description}>
+  <section>
+    <h1 class="title mb-3 font-medium text-2xl tracking-tight">
+      {page.data.title}
+    </h1>
+    {page.data.lastUpdated && (
+      <div class="flex justify-between items-center mt-2 mb-8 text-medium">
+        <p class="text-sm text-neutral-600 dark:text-neutral-400">
+          Last updated: {page.data.lastUpdated}
+        </p>
+      </div>
+    )}
+    <article class="prose prose-quoteless prose-neutral dark:prose-invert">
+      <Content />
+    </article>
+    <GlobalLightbox client:only="react" />
+  </section>
+</Base>
