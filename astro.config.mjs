@@ -57,7 +57,6 @@ export default defineConfig({
       },
     }),
     opengraphImages({
-      site: "https://www.matinhuseynzade.com",
       options: {
         fonts: [
           {
