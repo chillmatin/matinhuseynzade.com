@@ -5,7 +5,7 @@ summary: "resources from kompozisyon101 event @ izphot"
 tags: "event, kompozisyon, izphot, photography, presentation, iztech"
 ---
 import { Image } from "astro:assets";
-import ImageGrid from "../../components/mdx/ImageGrid.astro";
+import Gallery from "../../components/mdx/Gallery";
 
 
 **IZPHOT Topluluğu** kapsamında, **İYTE Teknopark’ta** düzenlediğimiz sunumda fotoğrafçılıkta kompozisyon konusunu örneklerle ele aldık.
@@ -19,21 +19,21 @@ Sunumun tamamına aşağıdaki bağlantıdan ulaşabilirsiniz:
 
 Aşağıda, etkinlikten bazı görüntüler de yer alıyor.
 
-<ImageGrid
+<Gallery
   columns={2}
-  lightbox={true}
   images={[
-    { src: "/blog/izphot/lecture.jpg", alt: "Lecture image", href: "/blog/izphot/lecture.jpg" },
-    { src: "/blog/izphot/team.jpg", alt: "Another image", href: "/blog/izphot/team.jpg" },
+    { src: "/blog/izphot/lecture.jpg", alt: "Lecture image" },
+    { src: "/blog/izphot/team.jpg", alt: "Another image" },
   ]}
+  client:load
 />
 
-<ImageGrid
+<Gallery
   columns={1}
-  lightbox={true}
   images={[
-    { src: "/blog/izphot/collective.jpg", alt: "poster image", href: "/blog/izphot/collective.jpg" },
+    { src: "/blog/izphot/collective.jpg", alt: "poster image" },
   ]}
+  client:load
 />
 
 

@@ -39,7 +39,7 @@ class GlobalGallery {
    * @returns Array of all gallery images
    */
   getImages(): GalleryImage[] {
-    return this.images;
+    return [...this.images];
   }
 
   /**
@@ -84,7 +84,8 @@ class GlobalGallery {
    * @private
    */
   private notifyListeners(): void {
-    this.listeners.forEach((listener) => listener(this.images));
+    const snapshot = [...this.images];
+    this.listeners.forEach((listener) => listener(snapshot));
   }
 }
 

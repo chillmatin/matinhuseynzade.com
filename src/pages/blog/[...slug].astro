@@ -24,12 +24,6 @@ const { Content } = await post.render();
 ---
 
 <Base title={post.data.title} description={post.data.summary}>
-  <script>
-    // Reset gallery on page load to avoid duplicate images
-    if (typeof window !== "undefined" && (window as any).__globalGallery) {
-      (window as any).__globalGallery.reset();
-    }
-  </script>
   <section>
     <script
       type="application/ld+json"

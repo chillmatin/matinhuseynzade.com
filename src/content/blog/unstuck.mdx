@@ -6,10 +6,9 @@ tags: "Productivity, Psychology, AI"
 ---
 
 import { Image } from "astro:assets";
-import LightboxImage from "../../components/mdx/LightboxImage";
+import Gallery from "../../components/mdx/Gallery";
 import Tweet from "astro-tweet";
 import { YouTube } from '@astro-community/astro-embed-youtube';
-import ImageGrid from "../../components/mdx/ImageGrid.astro";
 import Caption from "../../components/mdx/Caption.astro";
 import Table from "../../components/mdx/Table.astro";
 import Callout from "../../components/mdx/Callout.astro";
@@ -47,7 +46,18 @@ That’s how **[Unstuck](https://chillmatin.github.io/unstuck)** was born.
 
 It was a fun experience overall.
 
-<LightboxImage src="/blog/unstuck/unstuck-ui.png" alt="Unstuck app interface" width={1920} height={1080} client:idle />
+<Gallery
+  images={[
+    {
+      src: "/blog/unstuck/unstuck-ui.png",
+      alt: "Unstuck app interface",
+      width: 1920,
+      height: 1080,
+    },
+  ]}
+  columns={1}
+  client:load
+/>
 <Caption>Unstuck app interface</Caption>
 
 

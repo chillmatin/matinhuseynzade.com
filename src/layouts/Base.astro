@@ -56,6 +56,14 @@ const { title, description, image } = Astro.props;
         if (!event.matches) loadLenis();
       });
     </script>
+    <script is:inline>
+      // Reset global gallery on navigation to prevent image accumulation
+      document.addEventListener("astro:page-load", () => {
+        if (typeof window !== "undefined" && window.__globalGallery) {
+          window.__globalGallery.reset();
+        }
+      });
+    </script>
   </head>
   <body
     class="antialiased flex flex-col items-center justify-center mx-auto mt-2 lg:mt-8 mb-20 lg:mb-40

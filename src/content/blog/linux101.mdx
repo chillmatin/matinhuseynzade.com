@@ -5,8 +5,7 @@ summary: "resources from linux101 event @ iztech cybersecurity society"
 tags: "event, linux, iztech, cybersecurity"
 ---
 import { Image } from "astro:assets";
-import ImageGrid from "../../components/mdx/ImageGrid.astro";
-import LightboxImage from "../../components/mdx/LightboxImage";
+import Gallery from "../../components/mdx/Gallery";
 
 
 **11 Aralık’ta** gerçekleştirdiğimiz **Linux 101** eğitimi, Linux’un temellerine giriş yapmak isteyenler için keyifli ve verimli bir deneyimdi.
@@ -26,11 +25,11 @@ Bu sayfada, eğitimde kullanılan ve önerilen kaynakları arşiv niteliğinde p
 
 Bu kaynaklar sayesinde siz de Linux dünyasına ilk adımlarınızı atabilirsiniz.
 
-<ImageGrid
+<Gallery
   columns={2}
-  lightbox={true}
   images={[
-    { src: "/blog/linux101/lecture.jpg", alt: "Lecture image", href: "/blog/linux101/lecture.jpg" },
-    { src: "/blog/linux101/linux101poster.jpeg", alt: "poster image", href: "/blog/linux101/linux101poster.jpeg" },
+    { src: "/blog/linux101/lecture.jpg", alt: "Lecture image" },
+    { src: "/blog/linux101/linux101poster.jpeg", alt: "poster image" },
   ]}
+  client:load
 />

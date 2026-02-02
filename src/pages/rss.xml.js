@@ -33,28 +33,16 @@ function preprocessMDX(mdxContent) {
   return content.trim();
 }
 
-// Extract all images from MDX content (handles LightboxImage and ImageGrid components)
+// Extract all images from MDX content (handles Gallery component)
 function extractAllImages(mdxContent) {
   const images = [];
   
-  // Find all LightboxImage components (can span multiple lines)
-  // Matches <LightboxImage ... src="..." ... /> including multiline
-  const lightboxRegex = /<LightboxImage[\s\S]*?src=["']([^"']+)["'][\s\S]*?\/>/g;
-  let lightboxMatch;
-  while ((lightboxMatch = lightboxRegex.exec(mdxContent)) !== null) {
-    const img = lightboxMatch[1];
-    if (!images.includes(img)) {
-      images.push(img);
-    }
-  }
+  // Find all Gallery components and extract ALL src values
+  const galleryBlockRegex = /<Gallery[\s\S]*?\/>/g;
+  const galleryBlocks = mdxContent.match(galleryBlockRegex) || [];
   
-  // Find all ImageGrid components and extract ALL src values
-  // First, extract complete ImageGrid blocks (self-closing with />)
-  const imageGridBlockRegex = /<ImageGrid[\s\S]*?\/>/g;
-  const gridBlocks = mdxContent.match(imageGridBlockRegex) || [];
-  
-  for (const block of gridBlocks) {
-    // Extract all src: "..." values from this grid block
+  for (const block of galleryBlocks) {
+    // Extract all src: "..." values from this gallery block
     const srcRegex = /src:\s*["']([^"']+)["']/g;
     let srcMatch;
     while ((srcMatch = srcRegex.exec(block)) !== null) {
@@ -107,7 +95,7 @@ export async function GET(context) {
     });
     
     // Extract all images from raw MDX content (before preprocessing)
-    // This captures LightboxImage and ImageGrid components
+    // This captures Gallery component images
     const extractedImages = extractAllImages(post.body);
     const images = post.data.heroImage 
       ? [post.data.heroImage, ...extractedImages]
