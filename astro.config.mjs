@@ -63,10 +63,10 @@ export default defineConfig({
         fonts: [
           {
             name: "Roboto",
-            weight: 400,
+            weight: 700,
             style: "normal",
             data: fs.readFileSync(
-              "node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff"
+              "node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff"
             ),
           },
         ],
