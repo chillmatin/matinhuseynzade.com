@@ -12,6 +12,7 @@ export const socialLinks = {
   github: "https://github.com/chillmatin",
   // instagram: "https://www.instagram.com/chilldude.me",
   linkedin: "https://www.linkedin.com/in/chillmatin/",
+  mastodon: "https://mastodon.social/@chillmatin",
   email: "mailto:matinhuseynzade@gmail.com",
   // youtube: "https://www.youtube.com/@chilldude1337"
   goodreads: "https://www.goodreads.com/chilldude",
