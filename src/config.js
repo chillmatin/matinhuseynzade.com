@@ -4,7 +4,7 @@ export const metaData = {
   name: "Matin",
   ogImage: "/opengraph-image.png",
   description:
-    "Personal blog of Matin Huseynzade, a software engineer and tech enthusiast. Explore articles on web development, programming, and technology.",
+    "Personal blog of Matin Huseynzade, a software engineer and tech enthusiast. Explore articles on software engineering, open source software, and public learning experiences.",
 };
 
 export const socialLinks = {

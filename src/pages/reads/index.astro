@@ -1,0 +1,96 @@
+---
+import Base from "../../layouts/Base.astro";
+import { readFileSync } from "fs";
+import { join } from "path";
+import { XMLParser } from "fast-xml-parser";
+
+// Read OPML file from public directory
+const opmlPath = join(process.cwd(), "public", "reads.opml");
+const opmlText = readFileSync(opmlPath, "utf-8");
+
+// Simple OPML parser using a lightweight XML parser
+function parseOPML(xmlText: string) {
+  const parser = new XMLParser({
+    ignoreAttributes: false,
+    attributeNamePrefix: "",
+    trimValues: true,
+  });
+
+  const opml = parser.parse(xmlText);
+  const items: Array<{
+    title: string;
+    url: string;
+    author?: string;
+    description?: string;
+  }> = [];
+
+  const body = opml?.opml?.body;
+  if (!body) return items;
+
+  const collectOutlines = (outline: any) => {
+    if (!outline) return;
+    if (Array.isArray(outline)) {
+      outline.forEach((node) => collectOutlines(node));
+      return;
+    }
+
+    if (outline.text && outline.url) {
+      items.push({
+        title: outline.text,
+        url: outline.url,
+        author: outline.author || undefined,
+        description: outline.description || undefined,
+      });
+    }
+
+    if (outline.outline) {
+      collectOutlines(outline.outline);
+    }
+  };
+
+  collectOutlines(body.outline);
+
+  return items;
+}
+
+const reads = parseOPML(opmlText);
+
+const title = "Reads";
+const description = "A curated list of things worth reading";
+---
+
+<Base title={title} description={description}>
+  <section>
+    <h1 class="mb-8 text-2xl font-medium tracking-tight">Reads</h1>
+    <p class="mb-8 text-neutral-600 dark:text-neutral-400">
+      Articles, projects, and resources worth exploring available in <a href="/reads.opml" class="underline hover:opacity-80">OPML</a> format.
+    </p>
+    <div>
+      {
+        reads.map((item) => (
+          <a
+            class="flex flex-col space-y-1 mb-4 transition-opacity duration-200 hover:opacity-80"
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer">
+            <div class="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
+              <p class="text-black dark:text-white tracking-tight">
+                {item.title}
+              </p>
+              {item.author && (
+                <p class="text-neutral-600 dark:text-neutral-400 text-sm">
+                  by {item.author}
+                </p>
+              )}
+            </div>
+            {item.description && (
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                {item.description}
+              </p>
+            )}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Base>
