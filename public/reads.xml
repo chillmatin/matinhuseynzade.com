@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Reads</title>
+    <lastBuildDate>Thu, 05 Feb 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>How to Do Great Work</title>
+      <link>https://www.paulgraham.com/greatwork.html</link>
+      <author>Paul Graham</author>
+    </item>
+    <item>
+      <title>Learn In Public</title>
+      <link>https://www.swyx.io/learn-in-public/</link>
+      <author>Shawn Wang</author>
+    </item>
+  </channel>
+</rss>
