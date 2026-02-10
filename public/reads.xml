@@ -2,7 +2,12 @@
 <rss version="2.0">
   <channel>
     <title>Reads</title>
-    <lastBuildDate>Mon  9 Feb 14:49:16 GMT 2026</lastBuildDate>
+    <lastBuildDate>Mon,  10 Feb 01:30:16 GMT 2026</lastBuildDate>
+    <item>
+      <title>The Age of the Essay</title>
+      <link>https://www.paulgraham.com/essay.html</link>
+      <author>Paul Graham</author>
+    </item>
     <item>
       <title>Pressure Without a Plan</title>
       <link>https://lethain.com/pressure-without-a-plan/</link>
