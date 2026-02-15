@@ -23,14 +23,16 @@ function preprocessMDX(mdxContent) {
   // Remove export statements
   content = content.replace(/^export\s+.*?;?\s*$/gm, '');
   
-  // Extract YouTube embeds and convert to links
-  content = content.replace(/<YouTube\s+id=['"]([^'"]+)['"]\s*\/>/g, (match, id) => {
-    return `[Watch on YouTube](https://www.youtube.com/watch?v=${id})`;
+  // Extract YouTube embeds and convert to links with optional title
+  content = content.replace(/<YouTube\s+id=['"]([^'"]+)['"](?:\s+title=['"]([^'"]*)['"])?\s*\/>/g, (match, id, title) => {
+    const linkText = title ? `Watch on YouTube: ${title}` : 'Watch on YouTube';
+    return `\n\n[${linkText}](https://www.youtube.com/watch?v=${id})`;
   });
   
-  // Extract Tweet embeds and convert to links
-  content = content.replace(/<Tweet\s+id=['"]([^'"]+)['"]\s*\/>/g, (match, id) => {
-    return `[Tweet](https://x.com/i/web/status/${id})`;
+  // Extract Tweet embeds and convert to links with optional title
+  content = content.replace(/<Tweet\s+id=['"]([^'"]+)['"](?:\s+title=['"]([^'"]*)['"])?\s*\/>/g, (match, id, title) => {
+    const linkText = title ? `Tweet: ${title}` : 'Tweet';
+    return `\n\n[${linkText}](https://x.com/i/web/status/${id})`;
   });
   
   // Remove JSX components (self-closing and with children)
