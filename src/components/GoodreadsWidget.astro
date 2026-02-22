@@ -1,0 +1,147 @@
+---
+import { XMLParser } from "fast-xml-parser";
+
+type GoodreadsItem = {
+  title: string;
+  link: string;
+  author?: string;
+  coverUrl?: string;
+};
+
+const GOODREADS_RSS_URL =
+  "https://www.goodreads.com/review/list_rss/190062890?shelf=currently-reading";
+
+const response = await fetch(GOODREADS_RSS_URL, {
+  headers: {
+    "User-Agent": "matinhuseynzade.com Goodreads RSS"
+  }
+});
+
+const xmlText = response.ok ? await response.text() : "";
+
+function upscaleGoodreadsCover(url?: string) {
+  if (!url) return url;
+
+  return url.replace(/\._S[XY]\d+_/, "._SX100_");
+}
+
+function parseGoodreadsItems(xml: string): GoodreadsItem[] {
+  if (!xml) return [];
+
+  const parser = new XMLParser({
+    ignoreAttributes: false,
+    attributeNamePrefix: "",
+    trimValues: true
+  });
+
+  const rss = parser.parse(xml);
+  const channel = rss?.rss?.channel;
+  const rawItems = channel?.item;
+  const items: GoodreadsItem[] = [];
+
+  const collect = (item: any) => {
+    if (!item) return;
+    if (Array.isArray(item)) {
+      item.forEach((node) => collect(node));
+      return;
+    }
+
+    const title = item.title;
+    const link = item.link || item.guid;
+
+    if (!title || !link) return;
+
+    items.push({
+      title,
+      link,
+      author: item.author_name || item.author || item?.book?.author?.name,
+      coverUrl: upscaleGoodreadsCover(
+        item.book_medium_image_url ||
+          item.book_image_url ||
+          item.book_small_image_url ||
+          item?.book?.image_url
+      )
+    });
+  };
+
+  collect(rawItems);
+
+  return items;
+}
+
+const items = parseGoodreadsItems(xmlText).slice(0, 5);
+---
+
+{items.length ? (
+  <ul class="gr-list">
+    {items.map((item) => (
+      <li class="gr-item">
+        {item.coverUrl && (
+          <img
+            class="gr-cover"
+            src={item.coverUrl}
+            alt={item.title}
+            loading="lazy"
+            width="100"
+            height="150"
+          />
+        )}
+        <div class="gr-meta">
+          <a
+            class="gr-title"
+            href={item.link}
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+          >
+            {item.title}
+          </a>
+          {item.author && <div class="gr-author">by {item.author}</div>}
+        </div>
+      </li>
+    ))}
+  </ul>
+) : (
+  <p class="gr-empty">No books found.</p>
+)}
+
+<style>
+  .gr-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  .gr-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .gr-cover {
+    display: block;
+    width: 100px;
+    height: auto;
+    border-radius: 4px;
+  }
+
+  .gr-meta {
+    display: grid;
+    gap: 4px;
+  }
+
+  .gr-title {
+    text-decoration: underline;
+  }
+
+  .gr-author {
+    font-size: 0.9em;
+    color: #666;
+  }
+
+  .gr-empty {
+    margin: 0;
+    color: #666;
+  }
+</style>
