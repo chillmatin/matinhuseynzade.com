@@ -6,6 +6,7 @@ type GoodreadsItem = {
   link: string;
   author?: string;
   coverUrl?: string;
+  sortDate?: string;
 };
 
 const GOODREADS_RSS_URL =
@@ -18,12 +19,6 @@ const response = await fetch(GOODREADS_RSS_URL, {
 });
 
 const xmlText = response.ok ? await response.text() : "";
-
-function upscaleGoodreadsCover(url?: string) {
-  if (!url) return url;
-
-  return url.replace(/\._S[XY]\d+_/, "._SX100_");
-}
 
 function parseGoodreadsItems(xml: string): GoodreadsItem[] {
   if (!xml) return [];
@@ -55,12 +50,13 @@ function parseGoodreadsItems(xml: string): GoodreadsItem[] {
       title,
       link,
       author: item.author_name || item.author || item?.book?.author?.name,
-      coverUrl: upscaleGoodreadsCover(
+      coverUrl:
+        item.book_large_image_url ||
         item.book_medium_image_url ||
-          item.book_image_url ||
-          item.book_small_image_url ||
-          item?.book?.image_url
-      )
+        item.book_image_url ||
+        item.book_small_image_url ||
+        item?.book?.image_url,
+      sortDate: item.pubDate || item.user_read_at || item.user_added_at
     });
   };
 
@@ -69,7 +65,13 @@ function parseGoodreadsItems(xml: string): GoodreadsItem[] {
   return items;
 }
 
-const items = parseGoodreadsItems(xmlText).slice(0, 5);
+const items = parseGoodreadsItems(xmlText)
+  .sort((a, b) => {
+    const aTime = a.sortDate ? new Date(a.sortDate).getTime() : 0;
+    const bTime = b.sortDate ? new Date(b.sortDate).getTime() : 0;
+    return aTime - bTime;
+  })
+  .slice(0, 5);
 ---
 
 {items.length ? (
