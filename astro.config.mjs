@@ -1,6 +1,8 @@
 import { defineConfig } from "astro/config";
+import fs from "node:fs";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
+import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
 import remarkMath from "remark-math";
@@ -45,7 +47,9 @@ export default defineConfig({
       ],
       gfm: true,
     }),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.endsWith("/thesis") && !page.includes("/thesis/"),
+    }),
     react({
       experimentalReactChildren: true,
     }),
@@ -72,5 +76,6 @@ export default defineConfig({
       render: presets.simpleBlog,
     }),
   ],
-  output: "static",
+  output: "server",
+  adapter: vercel(),
 });

@@ -12,9 +12,16 @@ export async function getStaticPaths() {
     props: page,
   }));
 }
+
 type Props = CollectionEntry<"pages">;
 
-const page = Astro.props;
+const page = Astro.props as Props;
+
+// In server mode, undefined props means the route doesn't match a real page
+if (!page || typeof page.render !== "function") {
+  return Astro.redirect("/404");
+}
+
 const { url, site } = Astro;
 const openGraphImageUrl = getImagePath({ url, site });
 const { Content } = await page.render();
