@@ -6,7 +6,8 @@ export const prerender = false;
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   const form = await request.formData();
   const password = form.get("password")?.toString() ?? "";
-  const nextPath = form.get("next")?.toString() || "/thesis";
+  const rawNextPath = form.get("next")?.toString() || "/thesis/";
+  const nextPath = rawNextPath === "/thesis" ? "/thesis/" : rawNextPath;
 
   const expectedPassword = import.meta.env.THESIS_PASSWORD;
   const sessionSecret = import.meta.env.THESIS_SESSION_SECRET;
@@ -18,7 +19,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
   if (password !== expectedPassword) {
     const failureUrl = new URL("/thesis/login", request.url);
     failureUrl.searchParams.set("error", "1");
-    failureUrl.searchParams.set("next", nextPath.startsWith("/thesis") ? nextPath : "/thesis");
+    failureUrl.searchParams.set("next", nextPath.startsWith("/thesis") ? nextPath : "/thesis/");
     return redirect(failureUrl.toString(), 302);
   }
 
@@ -30,7 +31,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     maxAge: THESIS_MAX_AGE_SECONDS,
   });
 
-  return redirect(nextPath.startsWith("/thesis") ? nextPath : "/thesis", 302);
+  return redirect(nextPath.startsWith("/thesis") ? nextPath : "/thesis/", 302);
 };
 
 export const DELETE: APIRoute = async ({ cookies, redirect }) => {

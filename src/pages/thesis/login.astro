@@ -1,53 +1,138 @@
 ---
 import Base from "../../layouts/Base.astro";
+import { THESIS_AUTH_COOKIE, isValidSessionValue } from "../../lib/thesisAuth";
 
 export const prerender = false;
 
 const nextPath = Astro.url.searchParams.get("next")?.startsWith("/thesis")
   ? Astro.url.searchParams.get("next")
-  : "/thesis";
+  : "/thesis/";
 const hasError = Astro.url.searchParams.get("error") === "1";
+
+const sessionSecret = import.meta.env.THESIS_SESSION_SECRET;
+const sessionCookie = Astro.cookies.get(THESIS_AUTH_COOKIE)?.value;
+
+if (sessionSecret && isValidSessionValue(sessionCookie, sessionSecret)) {
+  return Astro.redirect(nextPath, 302);
+}
 ---
 
-<Base title="Thesis Access" description="Enter password to access the private thesis">
-  <section class="space-y-6">
-    <div>
-      <h1 class="title mb-2 font-medium text-2xl tracking-tight">Private Thesis</h1>
-      <p class="text-neutral-600 dark:text-neutral-400">
-        Enter your password to continue. Access lasts for 24 hours.
+<Base title="Private Thesis Notes Access" description="Password-protected master's thesis notes page">
+  <section class="min-h-[55vh] flex items-center justify-center">
+    <div class="w-full max-w-md rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6 md:p-7 shadow-sm">
+      <h1 class="title text-2xl font-medium tracking-tight mb-2">Thesis Notes</h1>
+      <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-2">
+        Research notes, experiments, and literature.
       </p>
-    </div>
+      <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-5">
+        Supervised by Prof. Dr. Cüneyt Bazlamaçcı · IZTECH
+      </p>
 
-    <form method="post" action="/api/thesis-login" class="space-y-4 max-w-sm">
-      <input type="hidden" name="next" value={nextPath ?? "/thesis"} />
-      
       {hasError && (
-        <div class="p-4 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded text-red-800 dark:text-red-200 text-sm">
+        <p class="mb-4 rounded-md border border-red-200 dark:border-red-900/70 bg-red-50 dark:bg-red-950/40 px-3 py-2 text-sm text-red-700 dark:text-red-300">
           Incorrect password. Please try again.
-        </div>
+        </p>
       )}
+      <form method="post" action="/api/thesis-login" class="space-y-4">
+        <input type="hidden" name="next" value={nextPath ?? "/thesis/"} />
 
-      <div class="space-y-2">
-        <label for="password" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300">
+        <label class="block text-sm font-medium text-neutral-800 dark:text-neutral-200" for="thesis-password">
           Password
         </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          required
-          autocomplete="current-password"
-          class="w-full px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-md bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 transition-colors"
-          placeholder="Enter password"
-        />
-      </div>
+        <div class="flex items-center gap-2">
+          <input
+            id="thesis-password"
+            name="password"
+            type="password"
+            required
+            autocomplete="current-password"
+            autofocus
+            class="w-full h-10 rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-950 px-3 py-2 text-neutral-900 dark:text-neutral-100 outline-none ring-0 focus:border-neutral-500 dark:focus:border-neutral-500"
+            placeholder="Enter password"
+          />
+          <button
+            id="toggle-password"
+            type="button"
+            aria-controls="thesis-password"
+            aria-label="Show password"
+            title="Show password"
+            class="h-10 rounded-md border border-neutral-300 dark:border-neutral-700 px-3 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+          >
+            <svg
+              class="icon-show h-5 w-5"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M2.06 12A10.94 10.94 0 0 1 12 5c4.5 0 8.27 2.94 9.94 7A10.94 10.94 0 0 1 12 19c-4.5 0-8.27-2.94-9.94-7z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            <svg
+              class="icon-hide h-5 w-5 hidden"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m3 3 18 18" />
+              <path d="M10.58 10.58a2 2 0 0 0 2.84 2.84" />
+              <path d="M9.88 5.09A10.94 10.94 0 0 1 12 5c4.5 0 8.27 2.94 9.94 7a10.93 10.93 0 0 1-4.26 5.09" />
+              <path d="M6.61 6.61A10.93 10.93 0 0 0 2.06 12c1.67 4.06 5.44 7 9.94 7a10.94 10.94 0 0 0 5.39-1.39" />
+            </svg>
+          </button>
+        </div>
 
-      <button
-        type="submit"
-        class="w-full px-4 py-2 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 font-medium rounded-md hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600"
-      >
-        Open Thesis
-      </button>
-    </form>
+        <button
+          type="submit"
+          class="w-full rounded-md bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 px-4 py-2 text-sm font-medium hover:opacity-90 transition-opacity"
+        >
+          Continue → 
+        </button>
+      </form>
+    </div>
   </section>
 </Base>
+
+<script is:inline>
+  const bindPasswordToggle = () => {
+    const passwordInput = document.getElementById("thesis-password");
+    const toggleButton = document.getElementById("toggle-password");
+    const showIcon = toggleButton?.querySelector(".icon-show");
+    const hideIcon = toggleButton?.querySelector(".icon-hide");
+
+    if (!passwordInput || !toggleButton) {
+      return;
+    }
+
+    if (toggleButton.dataset.bound === "true") {
+      return;
+    }
+
+    toggleButton.dataset.bound = "true";
+
+    toggleButton.addEventListener("click", () => {
+      const isHidden = passwordInput.getAttribute("type") === "password";
+      passwordInput.setAttribute("type", isHidden ? "text" : "password");
+      toggleButton.setAttribute("aria-label", isHidden ? "Hide password" : "Show password");
+      toggleButton.setAttribute("title", isHidden ? "Hide password" : "Show password");
+
+      if (showIcon && hideIcon) {
+        showIcon.classList.toggle("hidden", isHidden);
+        hideIcon.classList.toggle("hidden", !isHidden);
+      }
+
+      // Return focus to password input for seamless typing
+      passwordInput.focus();
+    });
+  };
+
+  bindPasswordToggle();
+  document.addEventListener("astro:page-load", bindPasswordToggle);
+</script>

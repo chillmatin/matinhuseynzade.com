@@ -5,23 +5,21 @@ import GlobalLightbox from "../components/mdx/GlobalLightbox";
 import "katex/dist/katex.min.css";
 import { getImagePath } from "astro-opengraph-images";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
   return pages.map((page) => ({
     params: { slug: page.slug },
-    props: page,
+    props: { page },
   }));
 }
 
-type Props = CollectionEntry<"pages">;
-
-const page = Astro.props as Props;
-
-// In server mode, undefined props means the route doesn't match a real page
-if (!page || typeof page.render !== "function") {
-  return Astro.redirect("/404");
+interface Props {
+  page: CollectionEntry<"pages">;
 }
 
+const { page } = Astro.props;
 const { url, site } = Astro;
 const openGraphImageUrl = getImagePath({ url, site });
 const { Content } = await page.render();

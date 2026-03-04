@@ -6,17 +6,22 @@ import GlobalLightbox from "../../components/mdx/GlobalLightbox";
 import "katex/dist/katex.min.css";
 import { metaData } from "../../config";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   return posts.map((post) => ({
     params: { slug: post.slug },
-    props: post,
+    props: { post },
   }));
 }
-type Props = CollectionEntry<"blog">;
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
 
 import { getImagePath } from "astro-opengraph-images";
-const post = Astro.props;
+const { post } = Astro.props;
 const { url, site } = Astro;
 const openGraphImageUrl = getImagePath({ url, site });
 

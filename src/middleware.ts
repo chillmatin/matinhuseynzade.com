@@ -25,6 +25,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   const loginUrl = new URL("/thesis/login", context.url);
-  loginUrl.searchParams.set("next", pathname);
+  const nextPath = pathname === "/thesis" ? "/thesis/" : pathname;
+  loginUrl.searchParams.set("next", nextPath);
   return context.redirect(loginUrl.toString(), 302);
 });
