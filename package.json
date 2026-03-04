@@ -42,6 +42,7 @@
     "remark-math": "^6.0.0",
     "sanitize-html": "^2.17.0",
     "tw-to-css": "^0.0.12",
+    "ws": "^8.19.0",
     "yet-another-react-lightbox": "^3.28.0"
   },
   "engines": {
