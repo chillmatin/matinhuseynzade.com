@@ -77,5 +77,7 @@ export default defineConfig({
     }),
   ],
   output: "server",
-  adapter: vercel(),
+  adapter: vercel({
+    nodeVersion: "20.x",
+  }),
 });
