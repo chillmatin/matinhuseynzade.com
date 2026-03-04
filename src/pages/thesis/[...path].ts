@@ -49,7 +49,3 @@ export const GET: APIRoute = async ({ params }) => {
     return new Response("File not found", { status: 404 });
   }
 };
-
-export function getStaticPaths() {
-  return [];
-}
