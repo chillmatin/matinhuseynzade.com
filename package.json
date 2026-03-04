@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "bunx --bun astro dev",
     "start": "bunx --bun astro dev",
-    "build": "bunx --bun astro build && node scripts/patch-vercel-runtime.js",
+    "build": "bunx --bun astro build",
     "preview": "bunx --bun astro preview",
     "astro": "astro"
   },
@@ -46,7 +46,7 @@
     "yet-another-react-lightbox": "^3.28.0"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": "22.x"
   },
   "devDependencies": {
     "@iconify-json/fa6-brands": "^1.2.5",
