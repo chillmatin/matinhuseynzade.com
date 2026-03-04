@@ -5,6 +5,7 @@ import FormattedDate from "../../components/FormattedDate.astro";
 import GlobalLightbox from "../../components/mdx/GlobalLightbox";
 import "katex/dist/katex.min.css";
 import { metaData } from "../../config";
+import { getGeneratedOgImagePath } from "../../utils/opengraph";
 
 export const prerender = true;
 
@@ -20,10 +21,9 @@ interface Props {
   post: CollectionEntry<"blog">;
 }
 
-import { getImagePath } from "astro-opengraph-images";
 const { post } = Astro.props;
-const { url, site } = Astro;
-const openGraphImageUrl = getImagePath({ url, site });
+const { url } = Astro;
+const openGraphImageUrl = new URL(getGeneratedOgImagePath(url.pathname), metaData.baseUrl).href;
 
 const { Content } = await post.render();
 ---

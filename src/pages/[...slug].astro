@@ -3,7 +3,6 @@ import { type CollectionEntry, getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import GlobalLightbox from "../components/mdx/GlobalLightbox";
 import "katex/dist/katex.min.css";
-import { getImagePath } from "astro-opengraph-images";
 
 export const prerender = true;
 
@@ -20,8 +19,6 @@ interface Props {
 }
 
 const { page } = Astro.props;
-const { url, site } = Astro;
-const openGraphImageUrl = getImagePath({ url, site });
 const { Content } = await page.render();
 ---
 
