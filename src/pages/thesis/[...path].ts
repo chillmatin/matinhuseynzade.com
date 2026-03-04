@@ -26,26 +26,34 @@ export const GET: APIRoute = async ({ params }) => {
   }
 
   const thesisRoot = resolve(process.cwd(), "src/private/thesis");
-  const requestedPath = resolve(thesisRoot, path);
-  if (requestedPath !== thesisRoot && !requestedPath.startsWith(`${thesisRoot}${sep}`)) {
-    return new Response("Not found", { status: 404 });
+  const hasExtension = path.includes(".") && !path.endsWith(".");
+  const candidates = hasExtension
+    ? [path]
+    : [path, `${path}.html`, join(path, "index.html")];
+
+  for (const candidate of candidates) {
+    const requestedPath = resolve(thesisRoot, candidate);
+    if (requestedPath !== thesisRoot && !requestedPath.startsWith(`${thesisRoot}${sep}`)) {
+      return new Response("Not found", { status: 404 });
+    }
+
+    try {
+      const fileContent = await readFile(requestedPath);
+      const body = new Uint8Array(fileContent);
+      const ext = candidate.substring(candidate.lastIndexOf("."));
+      const contentType = MIME_TYPES[ext] || "application/octet-stream";
+
+      return new Response(body, {
+        headers: {
+          "Content-Type": contentType,
+          "Cache-Control": "private, no-store, no-cache, must-revalidate",
+          "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet",
+        },
+      });
+    } catch {
+      continue;
+    }
   }
 
-  const filePath = join(thesisRoot, path);
-
-  try {
-    const fileContent = await readFile(filePath);
-    const ext = path.substring(path.lastIndexOf("."));
-    const contentType = MIME_TYPES[ext] || "application/octet-stream";
-
-    return new Response(fileContent, {
-      headers: {
-        "Content-Type": contentType,
-        "Cache-Control": "private, no-store, no-cache, must-revalidate",
-        "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet",
-      },
-    });
-  } catch (error) {
-    return new Response("File not found", { status: 404 });
-  }
+  return new Response("File not found", { status: 404 });
 };
