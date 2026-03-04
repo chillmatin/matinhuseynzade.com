@@ -44,6 +44,9 @@
     "tw-to-css": "^0.0.12",
     "yet-another-react-lightbox": "^3.28.0"
   },
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "devDependencies": {
     "@iconify-json/fa6-brands": "^1.2.5",
     "@iconify-json/fa6-solid": "^1.2.3",

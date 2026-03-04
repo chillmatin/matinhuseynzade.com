@@ -1,11 +1,7 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "functions": {
-    "dist/server/entry.mjs": {
-      "runtime": "nodejs20.x"
-    }
-  },
+  "nodeVersion": "20.x",
   "headers": [
     {
       "source": "/thesis",
