@@ -192,3 +192,42 @@ blockquote p:first-of-type::after {
   --yarl__color_button_active: rgba(255, 255, 255, 1);
   --yarl__color_button_disabled: rgba(255, 255, 255, 0.3);
 }
+/* Goodreads Widget Styles */
+.gr-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.gr-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.gr-cover {
+  display: block;
+  width: 100px;
+  height: auto;
+  border-radius: 4px;
+}
+
+.gr-meta {
+  display: grid;
+  gap: 4px;
+}
+
+.gr-title {
+  text-decoration: underline;
+}
+
+.gr-author {
+  font-size: 0.9em;
+  opacity: 0.7;
+}
+
+.gr-loading {
+  font-style: italic;
+}
