@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { getGlobalGallery } from "./globalGallery";
 import type { GalleryImage } from "./types";
 import { LIGHTBOX_CONFIG } from "./types";
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
 
 /**
  * GlobalLightbox - Unified lightbox component for all page images
@@ -33,8 +35,6 @@ export default function GlobalLightbox() {
           import("yet-another-react-lightbox/plugins/fullscreen"),
           import("yet-another-react-lightbox/plugins/zoom"),
           import("yet-another-react-lightbox/plugins/thumbnails"),
-          import("yet-another-react-lightbox/styles.css"),
-          import("yet-another-react-lightbox/plugins/thumbnails.css"),
         ]);
 
       if (cancelled) return;
