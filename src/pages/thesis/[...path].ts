@@ -4,6 +4,11 @@ import { join, resolve, sep } from "node:path";
 
 export const prerender = false;
 
+const normalizeThesisHtml = (html: string) => {
+  const withStableBase = html.replace(/<base\b[^>]*>/i, '<base href="/thesis/">');
+  return withStableBase.replace(/(["'(])\/site-lib\//g, "$1/thesis/site-lib/");
+};
+
 const MIME_TYPES: Record<string, string> = {
   ".html": "text/html",
   ".js": "application/javascript",
@@ -39,9 +44,22 @@ export const GET: APIRoute = async ({ params }) => {
 
     try {
       const fileContent = await readFile(requestedPath);
-      const body = new Uint8Array(fileContent);
       const ext = candidate.substring(candidate.lastIndexOf("."));
       const contentType = MIME_TYPES[ext] || "application/octet-stream";
+
+      if (ext === ".html") {
+        const html = normalizeThesisHtml(fileContent.toString("utf-8"));
+
+        return new Response(html, {
+          headers: {
+            "Content-Type": `${contentType}; charset=utf-8`,
+            "Cache-Control": "private, no-store, no-cache, must-revalidate",
+            "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet",
+          },
+        });
+      }
+
+      const body = new Uint8Array(fileContent);
 
       return new Response(body, {
         headers: {
