@@ -1,7 +1,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 
 export const THESIS_AUTH_COOKIE = "thesis_auth";
-export const THESIS_MAX_AGE_SECONDS = 60 * 60 * 24;
+export const THESIS_MAX_AGE_SECONDS = 60 * 60 * 24 * 30;
 
 const sign = (value: string, secret: string) => createHmac("sha256", secret).update(value).digest("hex");
 
