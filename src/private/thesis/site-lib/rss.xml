@@ -1,4 +1,4 @@
-<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[matinhuseynzade.com/thesis]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.svg</url><title>matinhuseynzade.com/thesis</title><link/></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Thu, 05 Mar 2026 14:39:06 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Thu, 05 Mar 2026 14:39:05 GMT</pubDate><ttl>60</ttl><dc:creator/><item><title><![CDATA[thesis-log]]></title><description><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[matinhuseynzade.com/thesis]]></title><description><![CDATA[Obsidian digital garden]]></description><link>http://github.com/dylang/node-rss</link><image><url>site-lib/media/favicon.svg</url><title>matinhuseynzade.com/thesis</title><link></link></image><generator>Webpage HTML Export plugin for Obsidian</generator><lastBuildDate>Thu, 05 Mar 2026 17:52:35 GMT</lastBuildDate><atom:link href="site-lib/rss.xml" rel="self" type="application/rss+xml"/><pubDate>Thu, 05 Mar 2026 17:52:34 GMT</pubDate><ttl>60</ttl><dc:creator></dc:creator><item><title><![CDATA[thesis-log]]></title><description><![CDATA[
 <a data-tooltip-position="top" aria-label="2026-02-28" data-href="#2026-02-28" href="00_thesis/thesis-log.html#2026-02-28_0" class="internal-link" target="_self" rel="noopener nofollow">2026-02-28</a>
 <br><a data-tooltip-position="top" aria-label="2026-03-01" data-href="#2026-03-01" href="00_thesis/thesis-log.html#2026-03-01_0" class="internal-link" target="_self" rel="noopener nofollow">2026-03-01</a>
 <br><a data-tooltip-position="top" aria-label="2026-03-02" data-href="#2026-03-02" href="00_thesis/thesis-log.html#2026-03-02_0" class="internal-link" target="_self" rel="noopener nofollow">2026-03-02</a>
@@ -31,17 +31,17 @@ REPO_THESIS="/home/matin/Documents/github/matinhuseynzade.com/src/private/thesis
 REPO="/home/matin/Documents/github/matinhuseynzade.com" # 1. Check if source is empty
 if [ -z "$(ls -A "$OBSIDIAN_EXPORT")" ]; then echo "Source is empty, nothing to do." exit 0
 fi # 2. Sync to repo
-rsync -av --delete "$OBSIDIAN_EXPORT/" "$REPO_THESIS/" # 3. Clean source folder
+rsync -av --delete --exclude='index.html' "$OBSIDIAN_EXPORT/" "$REPO_THESIS/" # 3. Clean source folder
 rm -rf "$OBSIDIAN_EXPORT"/* # 4. Git push
 cd "$REPO"
 git add src/private/thesis/
 git commit -m "chore: sync thesis $(date '+%Y-%m-%d %H:%M')" || echo "Nothing to commit"
 git push Exporting web output to OBSIDIAN_EXPORT and running push_notes_to_web.sh once a while will help me keep this page up-to-date. <br>Wondering if I should keep every day's note as a separate .md file like 2026-03-05.md? <a href=".?query=tag:meta" class="tag is-unresolved" target="_self" rel="noopener nofollow" data-href="#meta">#meta</a> <br>As for reading through papers, I think scientific method oriented approach should be embraced. Papers can be reduced into its simple phases which abides by the method: problem/question, hypothesis, experiment, result. <a href=".?query=tag:discuss" class="tag is-unresolved" target="_self" rel="noopener nofollow" data-href="#discuss">#discuss</a>
-]]></description><link>00_thesis/thesis-log.html</link><guid isPermaLink="false">00_thesis/thesis-log.md</guid><pubDate>Thu, 05 Mar 2026 14:38:57 GMT</pubDate></item><item><title><![CDATA[2026-02-24]]></title><description><![CDATA[
+]]></description><link>00_thesis/thesis-log.html</link><guid isPermaLink="false">00_thesis/thesis-log.md</guid><pubDate>Thu, 05 Mar 2026 17:52:25 GMT</pubDate></item><item><title><![CDATA[2026-02-24]]></title><description><![CDATA[
 Attend and research relevant conferences in your field
 Learn Web of Science, Scopus, and IEEE Xplore for finding quality papers
 Use LLMs to summarize papers and quickly judge if they're worth reading
 Identify target journals and conferences for publication
 Find websites that rank top-tier CS conferences
 Browse conference sessions and stalk key authors publishing in relevant tracks
-]]></description><link>00_thesis/meeting_notes/2026-02-24.html</link><guid isPermaLink="false">00_thesis/meeting_notes/2026-02-24.md</guid><pubDate>Thu, 05 Mar 2026 13:35:48 GMT</pubDate></item><item><title><![CDATA[213123]]></title><description><![CDATA[1231231]]></description><link>00_thesis/213123.html</link><guid isPermaLink="false">00_thesis/213123.md</guid><pubDate>Thu, 05 Mar 2026 13:55:58 GMT</pubDate></item></channel></rss>
+]]></description><link>00_thesis/meeting_notes/2026-02-24.html</link><guid isPermaLink="false">00_thesis/meeting_notes/2026-02-24.md</guid><pubDate>Thu, 05 Mar 2026 13:35:48 GMT</pubDate></item></channel></rss>

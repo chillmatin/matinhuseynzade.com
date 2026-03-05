@@ -91,7 +91,7 @@
 <span class="token keyword">fi</span>
 
 <span class="token comment"># 2. Sync to repo</span>
-<span class="token function">rsync</span> <span class="token parameter variable">-av</span> <span class="token parameter variable">--delete</span> <span class="token string">"<span class="token variable">$OBSIDIAN_EXPORT</span>/"</span> <span class="token string">"<span class="token variable">$REPO_THESIS</span>/"</span>
+<span class="token function">rsync</span> <span class="token parameter variable">-av</span> <span class="token parameter variable">--delete</span> <span class="token parameter variable">--exclude</span><span class="token operator">=</span><span class="token string">'index.html'</span> <span class="token string">"<span class="token variable">$OBSIDIAN_EXPORT</span>/"</span> <span class="token string">"<span class="token variable">$REPO_THESIS</span>/"</span>
 
 <span class="token comment"># 3. Clean source folder</span>
 <span class="token function">rm</span> <span class="token parameter variable">-rf</span> <span class="token string">"<span class="token variable">$OBSIDIAN_EXPORT</span>"</span>/*
@@ -101,6 +101,7 @@
 <span class="token function">git</span> <span class="token function">add</span> src/private/thesis/
 <span class="token function">git</span> commit <span class="token parameter variable">-m</span> <span class="token string">"chore: sync thesis <span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">'+%Y-%m-%d %H:%M'</span><span class="token variable">)</span></span>"</span> <span class="token operator">||</span> <span class="token builtin class-name">echo</span> <span class="token string">"Nothing to commit"</span>
 <span class="token function">git</span> push
+
 </code><button class="copy-code-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-copy"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></pre></div><div class="el-ul"><ul class="has-list-bullet">
 <li data-line="0" dir="auto"><span class="list-bullet"></span>Exporting web output to <code>OBSIDIAN_EXPORT</code> and running <code>push_notes_to_web.sh</code> once a while will help me keep this page up-to-date. </li>
 <li data-line="1" dir="auto"><span class="list-bullet"></span>Wondering if I should keep every day's note as a separate <code>.md</code> file like <code>2026-03-05.md</code>? <a href="?query=tag:meta" class="tag is-unresolved" target="_self" rel="noopener nofollow" data-href="#meta">#meta</a> </li>
