@@ -1,20 +1,15 @@
 import { defineMiddleware } from "astro:middleware";
 import { THESIS_AUTH_COOKIE, isValidSessionValue } from "./lib/thesisAuth";
 
-function withHeaders(response: Response): Response {
-  response.headers.set("Permissions-Policy", "geolocation=(), microphone=(), camera=()");
-  return response;
-}
-
 export const onRequest = defineMiddleware(async (context, next) => {
   const { pathname } = context.url;
 
   if (!pathname.startsWith("/thesis")) {
-    return withHeaders(await next());
+    return next();
   }
 
   if (pathname === "/thesis/login" || pathname === "/api/thesis-login") {
-    return withHeaders(await next());
+    return next();
   }
 
   const sessionSecret = import.meta.env.THESIS_SESSION_SECRET;
@@ -26,11 +21,11 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const isValid = isValidSessionValue(sessionCookie, sessionSecret);
 
   if (isValid) {
-    return withHeaders(await next());
+    return next();
   }
 
   const loginUrl = new URL("/thesis/login", context.url);
   const nextPath = pathname === "/thesis" ? "/thesis/" : pathname;
   loginUrl.searchParams.set("next", nextPath);
-  return withHeaders(context.redirect(loginUrl.toString(), 302));
+  return context.redirect(loginUrl.toString(), 302);
 });
