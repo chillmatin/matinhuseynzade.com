@@ -1,5 +1,3 @@
-import "@styles/lenis.css";
-
 import Lenis from "lenis";
 
 let lenisInstance;
