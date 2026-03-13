@@ -17,6 +17,7 @@ import "@fontsource/geist-sans/600.css";
 import "@fontsource/geist-mono/400.css";
 import "@fontsource/geist-mono/600.css";
 import "@styles/global.css";
+import lenisScriptUrl from "@scripts/lenisSmoothScroll.js?url";
 
 const { title, description, image } = Astro.props;
 ---
@@ -38,11 +39,11 @@ const { title, description, image } = Astro.props;
       title="Matin Huseynzade's RSS Feed"
       href={new URL("rss.xml", Astro.site)}
     />
-    <script type="module">
+    <script type="module" define:vars={{ lenisScriptUrl }}>
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
       const loadLenis = () =>
-        import("@scripts/lenisSmoothScroll.js").then((m) => (m.initLenis || m.default)?.());
+        import(lenisScriptUrl).then((m) => (m.initLenis || m.default)?.());
 
       if (!prefersReduced.matches) {
         if ("requestIdleCallback" in window) {
