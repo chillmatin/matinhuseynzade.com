@@ -75,6 +75,50 @@ const { title, description, image } = Astro.props;
       <slot />
       <Footer />
     </main>
+    <button
+      id="scroll-to-top"
+      aria-label="Scroll to top"
+      class="fixed bottom-8 right-8 z-50 flex items-center justify-center
+             w-9 h-9 rounded-full border border-neutral-300 dark:border-neutral-700
+             bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm
+             text-neutral-600 dark:text-neutral-400
+             shadow-sm hover:shadow-md
+             opacity-0 pointer-events-none
+             transition-all duration-300 ease-in-out
+             hover:scale-110 hover:text-neutral-900 dark:hover:text-neutral-100">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
+    </button>
+
+    <script is:inline>
+      document.addEventListener("astro:page-load", () => {
+        const btn = document.getElementById("scroll-to-top");
+        const nav = document.querySelector("nav");
+        if (!btn || !nav) return;
+
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (!entry.isIntersecting) {
+              btn.classList.remove("opacity-0", "pointer-events-none");
+              btn.classList.add("opacity-100", "pointer-events-auto");
+            } else {
+              btn.classList.add("opacity-0", "pointer-events-none");
+              btn.classList.remove("opacity-100", "pointer-events-auto");
+            }
+          },
+          { threshold: 0 }
+        );
+
+        observer.observe(nav);
+
+        btn.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      });
+    </script>
+
     <style>
       /* CSS rules for the page scrollbar */
       .scrollbar-hide::-webkit-scrollbar {
