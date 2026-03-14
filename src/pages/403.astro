@@ -1,0 +1,10 @@
+---
+import Base from "../layouts/Base.astro";
+import ErrorState from "../components/ErrorState.astro";
+
+Astro.response.status = 403;
+---
+
+<Base title="Forbidden" description="You do not have permission to access this page.">
+  <ErrorState code={403} />
+</Base>

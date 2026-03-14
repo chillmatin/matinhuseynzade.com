@@ -14,7 +14,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   const sessionSecret = import.meta.env.THESIS_SESSION_SECRET;
   if (!sessionSecret) {
-    return new Response("Server is missing THESIS_SESSION_SECRET", { status: 500 });
+    return context.rewrite("/500");
   }
 
   const sessionCookie = context.cookies.get(THESIS_AUTH_COOKIE)?.value;
