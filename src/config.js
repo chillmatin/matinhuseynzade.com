@@ -2,7 +2,7 @@ export const metaData = {
   baseUrl: "https://www.matinhuseynzade.com/",
   title: "Matin Huseynzade",
   name: "Matin",
-  ogImage: "/opengraph-image.png",
+  ogImage: "/index.png",
   description:
     "Personal blog of Matin Huseynzade, a software engineer and tech enthusiast. Explore articles on software engineering, open source software, and public learning experiences.",
 };

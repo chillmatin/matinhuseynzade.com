@@ -29,3 +29,6 @@ changelog.md
 .vscode
 
 .env
+
+# User-specific files
+DEVLOG.md

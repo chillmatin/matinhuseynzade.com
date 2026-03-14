@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import { metaData } from "./../config";
 import sanitizeHtml from "sanitize-html";
 import MarkdownIt from "markdown-it";
+import { getEntrySlug } from "../utils/contentSlug";
 
 const parser = new MarkdownIt({
   html: true, // Enable HTML tags in source
@@ -115,7 +116,7 @@ export async function GET(context) {
     
     const itemData = {
       ...post.data,
-      link: `/blog/${post.slug}/`,
+      link: `/blog/${getEntrySlug(post.id)}/`,
       content: sanitized,
     };
     

@@ -73,7 +73,7 @@ const blogPosts = (await getCollection("blog")).sort((a, b) => b.data.publishedA
         {
           blogPosts.slice(0, 3).map(post => (
             <li>
-              <a href={`/blog/${post.slug}`} class="text-lg font-medium text-neutral-800 dark:text-neutral-100 hover:underline">
+              <a href={`/blog/${post.id.replace(/\.(md|mdx)$/, "").replace(/\/index$/, "")}`} class="text-lg font-medium text-neutral-800 dark:text-neutral-100 hover:underline">
                 {post.data.title}
               </a>
               <div class="text-sm text-neutral-500 dark:text-neutral-400">

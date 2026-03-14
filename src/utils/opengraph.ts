@@ -3,7 +3,7 @@ export function getGeneratedOgImagePath(pathname: string): string {
   const normalizedPath = pathWithLeadingSlash !== "/" ? pathWithLeadingSlash.replace(/\/+$/, "") : "/";
 
   if (normalizedPath === "/") {
-    return "/opengraph-image.png";
+    return "/index.png";
   }
 
   return `${normalizedPath}/index.png`;
