@@ -40,6 +40,7 @@ export default defineConfig({
             behavior: "prepend",
             properties: {
               className: "anchor",
+              ariaLabel: "Section link",
             },
           },
         ],

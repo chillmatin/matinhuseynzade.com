@@ -5,8 +5,6 @@ interface Props {
   image?: string;
 }
 
-import Themes from "astro-themes";
-
 import BaseHead from "../components/BaseHead.astro";
 import Navbar from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
@@ -29,7 +27,52 @@ const { title, description, image } = Astro.props;
       content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
     />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <Themes />
+    <script is:inline>
+      const themeStorageKey = "theme";
+      const systemThemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+      const getStoredTheme = () => localStorage.getItem(themeStorageKey);
+      const resolveTheme = (storedTheme) => {
+        if (storedTheme === "light" || storedTheme === "dark") {
+          return storedTheme;
+        }
+
+        return systemThemeQuery.matches ? "dark" : "light";
+      };
+
+      const applyTheme = (theme, preference) => {
+        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.setAttribute("data-theme-preference", preference ?? "");
+        document.documentElement.style.colorScheme = theme;
+      };
+
+      const syncThemeFromStorage = () => {
+        const storedTheme = getStoredTheme();
+        applyTheme(resolveTheme(storedTheme), storedTheme);
+      };
+
+      document.addEventListener("set-theme", (event) => {
+        const requestedTheme = event.detail;
+
+        if (requestedTheme === "light" || requestedTheme === "dark") {
+          localStorage.setItem(themeStorageKey, requestedTheme);
+          applyTheme(requestedTheme, requestedTheme);
+        } else {
+          localStorage.removeItem(themeStorageKey);
+          syncThemeFromStorage();
+        }
+      });
+
+      window.addEventListener("storage", (event) => {
+        if (event.key === themeStorageKey) {
+          syncThemeFromStorage();
+        }
+      });
+
+      systemThemeQuery.addEventListener("change", syncThemeFromStorage);
+      document.addEventListener("astro:after-swap", syncThemeFromStorage);
+      syncThemeFromStorage();
+    </script>
     <BaseHead title={title} description={description} image={image} />
     <link
       rel="alternate"

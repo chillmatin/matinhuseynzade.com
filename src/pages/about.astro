@@ -10,7 +10,9 @@ import { Image } from "astro:assets";
     <div class="flex items-center gap-5">
       <Image
         src="/profile.webp"
-        alt="Profile photo"
+        alt="Matin Huseynzade"
+        loading="eager"
+        fetchpriority="high"
         class="w-24 h-24 rounded-full md:grayscale md:hover:grayscale-0"
         width={96}
         height={96}
