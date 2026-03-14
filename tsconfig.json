@@ -10,5 +10,9 @@
       "@styles/*": ["src/assets/styles/*"],
       "@images/*": ["src/assets/images/*"]
     }
-  }
+  },
+  "exclude": [
+    "dist",
+    "src/private/thesis/site-lib/scripts/**/*.js"
+  ]
 }

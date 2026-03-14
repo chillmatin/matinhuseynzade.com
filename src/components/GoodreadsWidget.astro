@@ -6,6 +6,13 @@
 </div>
 
 <script>
+  type GoodreadsItem = {
+    coverUrl?: string;
+    title: string;
+    link: string;
+    author?: string;
+  };
+
   function loadGoodreads() {
     const widget = document.getElementById('goodreads-widget');
     if (!widget) return;
@@ -19,7 +26,7 @@
       .then(res => {
         clearTimeout(timeout);
         if (!res.ok) throw new Error('Failed to fetch');
-        return res.json();
+        return res.json() as Promise<GoodreadsItem[]>;
       })
       .then(items => {
         if (!items || items.length === 0) {

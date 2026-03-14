@@ -1,5 +1,11 @@
 import type { GalleryImage } from "./types";
 
+declare global {
+  interface Window {
+    __globalGallery?: GlobalGallery;
+  }
+}
+
 /**
  * Global gallery state manager for unified lightbox experience
  * Manages image registration and gallery events across Astro's React islands
@@ -89,9 +95,12 @@ class GlobalGallery {
   }
 }
 
-// Create and expose global instance
-if (typeof window !== "undefined") {
-  (window as any).__globalGallery = (window as any).__globalGallery || new GlobalGallery();
+function getOrCreateWindowGallery(): GlobalGallery {
+  if (!window.__globalGallery) {
+    window.__globalGallery = new GlobalGallery();
+  }
+
+  return window.__globalGallery;
 }
 
 /**
@@ -103,5 +112,6 @@ export function getGlobalGallery(): GlobalGallery {
   if (typeof window === "undefined") {
     return new GlobalGallery();
   }
-  return (window as any).__globalGallery;
+
+  return getOrCreateWindowGallery();
 }

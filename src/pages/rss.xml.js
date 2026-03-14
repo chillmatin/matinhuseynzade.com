@@ -25,13 +25,13 @@ function preprocessMDX(mdxContent) {
   content = content.replace(/^export\s+.*?;?\s*$/gm, '');
   
   // Extract YouTube embeds and convert to links with optional title
-  content = content.replace(/<YouTube\s+id=['"]([^'"]+)['"](?:\s+title=['"]([^'"]*)['"])?\s*\/>/g, (match, id, title) => {
+  content = content.replace(/<YouTube\s+id=['"]([^'"]+)['"](?:\s+title=['"]([^'"]*)['"])?\s*\/>/g, (_match, id, title) => {
     const linkText = title ? `Watch on YouTube: ${title}` : 'Watch on YouTube';
     return `\n\n[${linkText}](https://www.youtube.com/watch?v=${id})`;
   });
   
   // Extract Tweet embeds and convert to links with optional title
-  content = content.replace(/<Tweet\s+id=['"]([^'"]+)['"](?:\s+title=['"]([^'"]*)['"])?\s*\/>/g, (match, id, title) => {
+  content = content.replace(/<Tweet\s+id=['"]([^'"]+)['"](?:\s+title=['"]([^'"]*)['"])?\s*\/>/g, (_match, id, title) => {
     const linkText = title ? `Tweet: ${title}` : 'Tweet';
     return `\n\n[${linkText}](https://x.com/i/web/status/${id})`;
   });

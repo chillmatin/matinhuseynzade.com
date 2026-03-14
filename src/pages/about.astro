@@ -1,11 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { socialLinks } from "../config";
-import { getCollection } from "astro:content";
-import FormattedDate from "../components/FormattedDate.astro";
 import { Image } from "astro:assets";
-
-const blogPosts = (await getCollection("blog")).sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 ---
 
 <Base>
