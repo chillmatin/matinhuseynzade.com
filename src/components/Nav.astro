@@ -49,9 +49,14 @@ const navItems = {
     setTheme(newTheme);
   }
 
-  document.addEventListener("astro:page-load", () => {
-    document
-      .getElementById("theme-toggle")
-      .addEventListener("click", toggleTheme);
-  });
+  function bindThemeToggle() {
+    const themeToggle = document.getElementById("theme-toggle");
+    if (!themeToggle || themeToggle.dataset.bound === "true") return;
+
+    themeToggle.addEventListener("click", toggleTheme);
+    themeToggle.dataset.bound = "true";
+  }
+
+  bindThemeToggle();
+  document.addEventListener("DOMContentLoaded", bindThemeToggle, { once: true });
 </script>

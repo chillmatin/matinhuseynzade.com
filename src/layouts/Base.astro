@@ -6,7 +6,6 @@ interface Props {
 }
 
 import Themes from "astro-themes";
-import { ClientRouter } from "astro:transitions";
 
 import BaseHead from "../components/BaseHead.astro";
 import Navbar from "../components/Nav.astro";
@@ -23,7 +22,7 @@ const { title, description, image } = Astro.props;
 
 <html lang="en" class="scrollbar-hide">
   <head>
-    <ClientRouter />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="googlebot"
@@ -39,12 +38,14 @@ const { title, description, image } = Astro.props;
       href={new URL("rss.xml", Astro.site)}
     />
     <script is:inline>
-      // Reset global gallery on navigation to prevent image accumulation
-      document.addEventListener("astro:page-load", () => {
+      const resetGlobalGallery = () => {
         if (typeof window !== "undefined" && window.__globalGallery) {
           window.__globalGallery.reset();
         }
-      });
+      };
+
+      resetGlobalGallery();
+      document.addEventListener("DOMContentLoaded", resetGlobalGallery, { once: true });
     </script>
   </head>
   <body
@@ -74,7 +75,7 @@ const { title, description, image } = Astro.props;
     </button>
 
     <script is:inline>
-      document.addEventListener("astro:page-load", () => {
+      const bindScrollToTop = () => {
         const btn = document.getElementById("scroll-to-top");
         const nav = document.querySelector("nav");
         if (!btn || !nav) return;
@@ -97,7 +98,10 @@ const { title, description, image } = Astro.props;
         btn.addEventListener("click", () => {
           window.scrollTo({ top: 0, behavior: "smooth" });
         });
-      });
+      };
+
+      bindScrollToTop();
+      document.addEventListener("DOMContentLoaded", bindScrollToTop, { once: true });
     </script>
 
     <style>

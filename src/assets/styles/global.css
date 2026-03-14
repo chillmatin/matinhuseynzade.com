@@ -1,6 +1,4 @@
 @import "tailwindcss";
-@import "yet-another-react-lightbox/styles.css";
-@import "yet-another-react-lightbox/plugins/thumbnails.css";
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 @plugin "@tailwindcss/typography";
 
@@ -28,19 +26,6 @@
 
 html,
 body {
-  background-color: var(--page-bg);
-}
-
-/* Prevent white flash during View Transitions */
-::view-transition-old(root),
-::view-transition-new(root) {
-  background-color: var(--page-bg);
-  animation-duration: 0.001ms;
-  animation-iteration-count: 1;
-  mix-blend-mode: normal;
-}
-
-::view-transition-group(root) {
   background-color: var(--page-bg);
 }
 
