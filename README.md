@@ -5,11 +5,6 @@ Website link: [matinhuseynzade.com](https://www.matinhuseynzade.com)
 
 This website is using [Astrofolio](https://github.com/vikas5914/Astrofolio) template.
 
-## Release
-
-- Current version: `v2.0.0`
-- Full release notes: [`CHANGELOG.md`](./CHANGELOG.md)
-
 ## Private thesis route
 
 To protect `/thesis`, set these environment variables in your deployment and local `.env`:
