@@ -2,6 +2,41 @@
 
 All notable changes to this project are documented in this file.
 
+## v2.0.1 - 2026-03-14
+
+Compared with `v2.0.0`, this patch release focuses on embed migration cleanup, stronger TypeScript compatibility, and minor content/page maintenance.
+
+### Changed
+
+- Replaced React-based embed components with Astro-native alternatives:
+  - `src/components/mdx/Tweet.astro` now uses `astro-tweet`
+  - `src/components/mdx/YouTube.astro` now uses `@astro-community/astro-embed-youtube`
+- Improved typing in client-side components:
+  - added explicit Goodreads response typing in `src/components/GoodreadsWidget.astro`
+  - replaced `any` usage in global gallery state with typed `window.__globalGallery` in `src/components/mdx/globalGallery.ts`
+- Updated Astro content schema import for compatibility:
+  - switched `z` import to `astro/zod` in `src/content.config.ts`
+- Added `is:inline` to blog JSON-LD script for Astro runtime expectations in `src/pages/blog/[...slug].astro`
+- Minor cleanup of unused imports/variables and callback args in:
+  - `src/pages/about.astro`
+  - `src/pages/projects/index.astro`
+  - `src/pages/rss.xml.js`
+  - `src/pages/atom.xml.js`
+
+### Dependency And Config Updates
+
+- Added development type packages:
+  - `@types/markdown-it`
+  - `@types/sanitize-html`
+- Updated lockfile and TypeScript exclusions:
+  - `bun.lockb`
+  - `tsconfig.json`
+
+### Notes
+
+- This is a patch release with no intentional breaking changes.
+- Build validation passed successfully before release (`bun run build`).
+
 ## v2.0.0 - 2026-03-14
 
 Compared with `v1.3.0`, this release introduces a major framework upgrade, new user-facing pages, thesis-area improvements, feed/runtime improvements, and multiple UX/content refinements.
