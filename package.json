@@ -1,7 +1,7 @@
 {
-  "name": "astrofolio",
+  "name": "matinhuseynzade.com",
   "type": "module",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "scripts": {
     "dev": "bunx --bun astro dev",
     "start": "node ./dist/server/entry.mjs",
