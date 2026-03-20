@@ -1,0 +1,13 @@
+---
+import AstroTweet from "astro-tweet";
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+---
+
+<div class="tweet my-6 flex justify-center">
+  <AstroTweet id={id} />
+</div>

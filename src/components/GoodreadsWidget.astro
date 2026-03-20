@@ -1,0 +1,93 @@
+---
+---
+
+<div id="goodreads-widget">
+  <p class="gr-loading text-neutral-600 dark:text-neutral-400 text-sm">Loading books...</p>
+</div>
+
+<script>
+  type GoodreadsItem = {
+    coverUrl?: string;
+    title: string;
+    link: string;
+    author?: string;
+  };
+
+  function loadGoodreads() {
+    const widget = document.getElementById('goodreads-widget');
+    if (!widget) return;
+
+    // Timeout fallback
+    const timeout = setTimeout(() => {
+      widget.innerHTML = '<p class="text-neutral-500 dark:text-neutral-500 text-sm">Unable to load books right now.</p>';
+    }, 10000);
+
+    fetch('/api/goodreads')
+      .then(res => {
+        clearTimeout(timeout);
+        if (!res.ok) throw new Error('Failed to fetch');
+        return res.json() as Promise<GoodreadsItem[]>;
+      })
+      .then(items => {
+        if (!items || items.length === 0) {
+          widget.innerHTML = '';
+          return;
+        }
+
+        const list = document.createElement('ul');
+        list.className = 'gr-list';
+
+        items.forEach(item => {
+          const li = document.createElement('li');
+          li.className = 'gr-item';
+
+          if (item.coverUrl) {
+            const img = document.createElement('img');
+            img.className = 'gr-cover';
+            img.src = item.coverUrl;
+            img.alt = item.title;
+            img.loading = 'lazy';
+            img.width = 100;
+            img.height = 150;
+            li.appendChild(img);
+          }
+
+          const meta = document.createElement('div');
+          meta.className = 'gr-meta';
+
+          const link = document.createElement('a');
+          link.className = 'gr-title';
+          link.href = item.link;
+          link.target = '_blank';
+          link.rel = 'nofollow noopener noreferrer';
+          link.textContent = item.title;
+          meta.appendChild(link);
+
+          if (item.author) {
+            const author = document.createElement('div');
+            author.className = 'gr-author';
+            author.textContent = `by ${item.author}`;
+            meta.appendChild(author);
+          }
+
+          li.appendChild(meta);
+          list.appendChild(li);
+        });
+
+        widget.innerHTML = '';
+        widget.appendChild(list);
+      })
+      .catch((err) => {
+        clearTimeout(timeout);
+        console.error('Goodreads fetch failed:', err);
+        widget.innerHTML = '';
+      });
+  }
+
+  // Run immediately if DOM is ready, otherwise wait
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadGoodreads);
+  } else {
+    loadGoodreads();
+  }
+</script>

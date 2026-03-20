@@ -1,0 +1,43 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import Base from "../layouts/Base.astro";
+import GlobalLightbox from "../components/mdx/GlobalLightbox";
+import { getEntrySlug } from "../utils/contentSlug";
+import "katex/dist/katex.min.css";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const pages = await getCollection("pages");
+  return pages.map((page) => ({
+    params: { slug: getEntrySlug(page.id) },
+    props: { page },
+  }));
+}
+
+interface Props {
+  page: CollectionEntry<"pages">;
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+
+<Base title={page.data.title} description={page.data.description}>
+  <section>
+    <h1 class="title mb-3 font-medium text-2xl tracking-tight">
+      {page.data.title}
+    </h1>
+    {page.data.lastUpdated && (
+      <div class="flex justify-between items-center mt-2 mb-8 text-medium">
+        <p class="text-sm text-neutral-600 dark:text-neutral-400">
+          Last updated: {page.data.lastUpdated}
+        </p>
+      </div>
+    )}
+    <article class="prose prose-quoteless prose-neutral dark:prose-invert">
+      <Content />
+    </article>
+    <GlobalLightbox client:only="react" />
+  </section>
+</Base>

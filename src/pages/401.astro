@@ -1,0 +1,10 @@
+---
+import Base from "../layouts/Base.astro";
+import ErrorState from "../components/ErrorState.astro";
+
+Astro.response.status = 401;
+---
+
+<Base title="Unauthorized" description="You need to authenticate to access this page.">
+  <ErrorState code={401} />
+</Base>

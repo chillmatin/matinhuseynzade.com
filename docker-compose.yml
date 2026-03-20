@@ -1,0 +1,17 @@
+services:
+  web:
+    image: matinhuseynzade-com:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+      args:
+        PUBLIC_UMAMI_WEBSITE_ID: ${PUBLIC_UMAMI_WEBSITE_ID}
+        PUBLIC_UMAMI_SCRIPT_URL: ${PUBLIC_UMAMI_SCRIPT_URL}
+    expose:
+      - "4321"
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 4321
+    restart: unless-stopped

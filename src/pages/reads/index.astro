@@ -1,0 +1,92 @@
+---
+import Base from "../../layouts/Base.astro";
+import { readFileSync } from "fs";
+import { join } from "path";
+import { XMLParser } from "fast-xml-parser";
+
+// Read RSS file from public directory
+const rssPath = join(process.cwd(), "public", "reads.xml");
+const rssText = readFileSync(rssPath, "utf-8");
+
+// Simple RSS parser using a lightweight XML parser
+function parseRSS(xmlText: string) {
+  const parser = new XMLParser({
+    ignoreAttributes: false,
+    attributeNamePrefix: "",
+    trimValues: true,
+  });
+
+  const rss = parser.parse(xmlText);
+  const items: Array<{
+    title: string;
+    url: string;
+    author?: string;
+    description?: string;
+  }> = [];
+
+  const channel = rss?.rss?.channel;
+  if (!channel?.item) return items;
+
+  const collectItems = (item: any) => {
+    if (!item) return;
+    if (Array.isArray(item)) {
+      item.forEach((node) => collectItems(node));
+      return;
+    }
+
+    if (item.title && item.link) {
+      items.push({
+        title: item.title,
+        url: item.link,
+        author: item.author || undefined,
+        description: item.description || undefined,
+      });
+    }
+  };
+
+  collectItems(channel.item);
+
+  return items;
+}
+
+const reads = parseRSS(rssText);
+
+const title = "Reads";
+const description = "A curated list of things worth reading";
+---
+
+<Base title={title} description={description}>
+  <section>
+    <h1 class="mb-8 text-2xl font-medium tracking-tight">Reads</h1>
+    <p class="mb-8 text-neutral-600 dark:text-neutral-400">
+      Curated reads in <a href="/reads.xml" class="underline hover:opacity-80">RSS</a> format. Sources: <a href="https://feeeed.nateparrott.com/recs/zjR0Zk9rfqeGjE8I9FT0" target="_blank" rel="noopener noreferrer" class="underline hover:opacity-80">Publishers I follow</a>.
+    </p>
+    <div>
+      {
+        reads.map((item) => (
+          <a
+            class="flex flex-col space-y-1 mb-4 transition-opacity duration-200 hover:opacity-80"
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer">
+            <div class="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-2">
+              <p class="text-black dark:text-white tracking-tight">
+                {item.title}
+              </p>
+              {item.author && (
+                <p class="text-neutral-600 dark:text-neutral-400 text-sm">
+                  by {item.author}
+                </p>
+              )}
+            </div>
+            {item.description && (
+              <p class="text-sm text-neutral-600 dark:text-neutral-400">
+                {item.description}
+              </p>
+            )}
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</Base>

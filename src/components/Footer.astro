@@ -1,0 +1,52 @@
+---
+import { metaData, socialLinks } from "../config";
+import { Icon } from "astro-icon/components";
+
+const YEAR = new Date().getFullYear();
+
+const socialIcons = [
+  { href: socialLinks.github, icon: "fa6-brands:github", label: "GitHub profile (opens in a new tab)" },
+  // { href: socialLinks.instagram, icon: "fa6-brands:instagram" },
+  { href: socialLinks.twitter, icon: "fa6-brands:x-twitter", label: "Twitter profile (opens in a new tab)" },
+  { href: socialLinks.linkedin, icon: "fa6-brands:linkedin-in", label: "LinkedIn profile (opens in a new tab)" },
+  { href: socialLinks.mastodon, icon: "fa6-brands:mastodon", label: "Mastodon profile (opens in a new tab)" },
+  // { href: socialLinks.goodreads, icon: "fa6-brands:goodreads" },
+  { href: socialLinks.email, icon: "tabler:mail-filled", label: "Send email" },
+  // { href: socialLinks.youtube, icon: "fa6-brands:youtube" }
+];
+---
+
+<small class="block mt-auto pt-16 lg:pt-24 text-[#1C1C1C] dark:text-[#D4D4D4]">
+  <time>© {YEAR}</time>{" "}
+  <a class="no-underline" href="/" aria-label="Go to homepage">
+    {metaData.title}
+  </a>
+  <div
+    class="flex text-lg gap-3.5 float-right transition-opacity duration-300 hover:opacity-90">
+    {
+      socialIcons.map((link) => (
+        <a
+          href={link.href}
+          target="_blank"
+          aria-label={link.label}
+          rel={link.href === socialLinks.mastodon ? "me noopener noreferrer" : "noopener noreferrer"}>
+          <Icon name={link.icon} aria-hidden="true" />
+        </a>
+      ))
+    }
+
+    <a href="/rss.xml" target="_self" aria-label="RSS feed">
+      <Icon name="fa6-solid:rss" aria-hidden="true" />
+    </a>
+
+  </div>
+</small>
+
+<style>
+  @media screen and (max-width: 480px) {
+    article {
+      padding-top: 2rem;
+      padding-bottom: 4rem;
+    }
+  }
+</style>

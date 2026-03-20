@@ -1,0 +1,77 @@
+---
+interface Props {
+  code: number;
+  title?: string;
+  message?: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+}
+
+const fallbackByCode: Record<number, { title: string; message: string }> = {
+  401: {
+    title: "Authentication required",
+    message: "You need to sign in before accessing this page.",
+  },
+  403: {
+    title: "Access is restricted",
+    message: "You do not have permission to view this page.",
+  },
+  404: {
+    title: "This page does not exist",
+    message: "The URL may be incorrect, or the page may have been moved.",
+  },
+  500: {
+    title: "Something went wrong",
+    message: "An unexpected server error occurred. Please try again.",
+  },
+};
+
+const {
+  code,
+  title,
+  message,
+  primaryHref = "/",
+  primaryLabel = "Homepage",
+  secondaryHref,
+  secondaryLabel,
+} = Astro.props;
+
+const fallback = fallbackByCode[code] ?? {
+  title: "Unexpected error",
+  message: "Something unexpected happened while loading this page.",
+};
+
+const resolvedTitle = title ?? fallback.title;
+const resolvedMessage = message ?? fallback.message;
+---
+
+<section class="min-h-[55vh] flex items-center justify-center">
+  <div class="w-full rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6 md:p-7 shadow-sm">
+    <p class="text-xs font-mono tracking-widest uppercase text-neutral-500 dark:text-neutral-400 mb-3">
+      Error {code}
+    </p>
+    <h1 class="title text-2xl font-medium tracking-tight mb-2">{resolvedTitle}</h1>
+    <p class="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-[56ch]">
+      {resolvedMessage}
+    </p>
+    <div class="mt-6 flex flex-wrap gap-2">
+      <a
+        href={primaryHref}
+        autofocus
+        class="inline-flex items-center rounded-md bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 px-4 py-2 text-sm font-medium hover:opacity-90 transition-opacity"
+      >
+        {primaryLabel}
+      </a>
+      {secondaryHref && secondaryLabel && (
+        <a
+          href={secondaryHref}
+          class="inline-flex items-center rounded-md border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-sm font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+        >
+          {secondaryLabel}
+        </a>
+      )}
+    </div>
+  </div>
+</section>

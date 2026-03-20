@@ -1,0 +1,53 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+import { metaData } from "../config";
+import { SEO } from "astro-seo";
+import { getGeneratedOgImagePath } from "../utils/opengraph";
+
+const { title, description = metaData.description, image } = Astro.props;
+
+const { url } = Astro;
+const canonicalUrl = new URL(url.pathname, metaData.baseUrl).href;
+
+// Always generate absolute image URLs on the preferred canonical host.
+const openGraphImage = image
+  ? new URL(image, metaData.baseUrl).href
+  : new URL(getGeneratedOgImagePath(url.pathname), metaData.baseUrl).href;
+---
+
+<SEO
+  title={title}
+  titleTemplate={`%s | ${metaData.title}`}
+  titleDefault={metaData.title}
+  description={description}
+  canonical={canonicalUrl}
+  openGraph={{
+    basic: {
+      title: title || metaData.title,
+      type: "website",
+      image: openGraphImage,
+      url: canonicalUrl,
+    },
+    optional: {
+      description,
+      siteName: "matinhuseynzade.com",
+      locale: "en_US",
+    },
+  }}
+  twitter={{
+    card: "summary_large_image",
+    title: title || metaData.title,
+    description,
+    image: openGraphImage,
+  }}
+  extend={{
+    // extending the default link tags
+    link: [{ rel: "icon", href: "/favicon.ico" }],
+    meta: [{ name: "fediverse:creator", content: "@chillmatin@mastodon.social" }],
+  }}
+/>

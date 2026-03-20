@@ -1,0 +1,10 @@
+---
+import Base from "../layouts/Base.astro";
+import ErrorState from "../components/ErrorState.astro";
+
+Astro.response.status = 500;
+---
+
+<Base title="Server error" description="Something went wrong on the server.">
+  <ErrorState code={500} />
+</Base>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Reads</title>
+    <lastBuildDate>Sun 15 Feb 21:09:27 +04 2026</lastBuildDate>
+    <item>
+      <title>Teach Yourself Programming in Ten Years</title>
+      <link>https://norvig.com/21-days.html</link>
+      <author>Peter Norvig</author>
+    </item>
+    <item>
+      <title>How to foster "shoshin" - a beginner's mind</title>
+      <link>https://psyche.co/guides/how-to-cultivate-shoshin-or-a-beginners-mind</link>
+      <author>Christian Jarrett</author>
+    </item>
+    <item>
+      <title>Datensparsamkeit</title>
+      <link>https://www.martinfowler.com/bliki/Datensparsamkeit.html</link>
+      <author>Martin Fowler</author>
+    </item>
+    <item>
+      <title>The Age of the Essay</title>
+      <link>https://www.paulgraham.com/essay.html</link>
+      <author>Paul Graham</author>
+    </item>
+    <item>
+      <title>Pressure Without a Plan</title>
+      <link>https://lethain.com/pressure-without-a-plan/</link>
+      <author>Will Larson</author>
+    </item>
+    <item>
+      <title>You Are Here</title>
+      <link>https://brooker.co.za/blog/2026/02/07/you-are-here.html</link>
+      <author>Marc Brooker</author>
+    </item>
+    <item>
+      <title>How to Do Great Work</title>
+      <link>https://www.paulgraham.com/greatwork.html</link>
+      <author>Paul Graham</author>
+    </item>
+    <item>
+      <title>Learn In Public</title>
+      <link>https://www.swyx.io/learn-in-public/</link>
+      <author>Shawn Wang</author>
+    </item>
+  </channel>
+</rss>
