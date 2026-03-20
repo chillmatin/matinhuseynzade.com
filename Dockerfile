@@ -33,6 +33,7 @@ ENV PORT=4321
 
 # Copy runtime artifacts and dependencies required by Astro server output.
 COPY --from=builder --chown=node:node /app/dist ./dist
+COPY --from=builder --chown=node:node /app/public ./public
 COPY --from=builder --chown=node:node /app/node_modules ./node_modules
 COPY --from=builder --chown=node:node /app/package.json ./package.json
 COPY --from=builder --chown=node:node /app/bun.lockb ./bun.lockb

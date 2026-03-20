@@ -1,12 +1,12 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { readFileSync } from "fs";
-import { join } from "path";
 import { XMLParser } from "fast-xml-parser";
 
-// Read RSS file from public directory
-const rssPath = join(process.cwd(), "public", "reads.xml");
-const rssText = readFileSync(rssPath, "utf-8");
+// Read RSS from the static endpoint to avoid filesystem coupling.
+const rssUrl = new URL("/reads.xml", Astro.url);
+const rssText = await fetch(rssUrl)
+  .then((response) => (response.ok ? response.text() : ""))
+  .catch(() => "");
 
 // Simple RSS parser using a lightweight XML parser
 function parseRSS(xmlText: string) {
@@ -49,7 +49,7 @@ function parseRSS(xmlText: string) {
   return items;
 }
 
-const reads = parseRSS(rssText);
+const reads = rssText ? parseRSS(rssText) : [];
 
 const title = "Reads";
 const description = "A curated list of things worth reading";
