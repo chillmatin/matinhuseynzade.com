@@ -56,3 +56,9 @@ docker build -t matinhuseynzade-com \
   .
 docker run --rm -p 4321:4321 matinhuseynzade-com
 ```
+
+## License
+This website's source code is open-sourced under the MIT License.
+
+## Acknowledgements
+Initial version of the website has been forked from [Astrofolio](https://github.com/vikas5914/Astrofolio).
