@@ -1,8 +1,29 @@
-# Matin Huseynzade's Personal Website
+<div align="center">
 
-Personal portfolio built with [Astro](https://astro.build/).
+[![License](https://img.shields.io/badge/license-MIT-blue)](#)
+[![Issues - matinhuseynzade.com](https://img.shields.io/github/issues/chillmatin/matinhuseynzade.com)](#)
+[![GitHub Release](https://img.shields.io/github/v/tag/chillmatin/matinhuseynzade.com)](#)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fmatinhuseynzade.com)](#)
+[![Astro](https://img.shields.io/badge/Astro-BC52EE?logo=astro&logoColor=fff)](#)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=fff)](#)
 
-Live: [matinhuseynzade.com](https://www.matinhuseynzade.com)
+</div>
+
+&nbsp;
+
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/chillmatin/matinhuseynzade.com/blob/main/public/icon/icon-dark.png?raw=true">
+    <source media="(prefers-color-scheme: light)" srcset="https://github.com/chillmatin/matinhuseynzade.com/blob/main/public/icon/icon-white.png?raw=true">
+    <img alt="matinhuseynzade.com logo" src="https://github.com/chillmatin/matinhuseynzade.com/blob/main/public/icon/icon-dark.png?raw=true" width="256">
+  </picture>
+</div>
+
+<h3 align="center">
+  <a href="matinhuseynzade.com">matinhuseynzade.com</a>
+  <br/>
+  Free and Open Source Blog Site
+</h3>
 
 ## Quick Start
 
