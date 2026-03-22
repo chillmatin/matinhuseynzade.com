@@ -11,18 +11,27 @@ import { getEntrySlug } from "../../utils/contentSlug";
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
-  return posts.map((post) => ({
+  const posts = (await getCollection("blog")).sort(
+    (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
+  );
+
+  return posts.map((post, index) => ({
     params: { slug: getEntrySlug(post.id) },
-    props: { post },
+    props: {
+      post,
+      newerPost: posts[index - 1] ?? null,
+      olderPost: posts[index + 1] ?? null,
+    },
   }));
 }
 
 interface Props {
   post: CollectionEntry<"blog">;
+  newerPost: CollectionEntry<"blog"> | null;
+  olderPost: CollectionEntry<"blog"> | null;
 }
 
-const { post } = Astro.props;
+const { post, newerPost, olderPost } = Astro.props;
 const { url } = Astro;
 const openGraphImageUrl = new URL(getGeneratedOgImagePath(url.pathname), metaData.baseUrl).href;
 
@@ -60,6 +69,44 @@ const { Content } = await render(post);
     <article class="prose prose-quoteless prose-neutral dark:prose-invert">
       <Content />
     </article>
+    {(newerPost || olderPost) && (
+      <nav class="mt-12 border-t border-neutral-200 pt-6 dark:border-neutral-800" aria-label="Post navigation">
+        <div class="grid gap-4 sm:grid-cols-2">
+          {olderPost ? (
+            <a
+              href={`/blog/${getEntrySlug(olderPost.id)}`}
+              class="group rounded-lg border border-neutral-200 p-4 transition-colors hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600"
+            >
+              <p class="text-sm font-medium text-neutral-900 transition-colors group-hover:text-black dark:text-neutral-100 dark:group-hover:text-white">&larr; {olderPost.data.title}</p>
+              <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                <FormattedDate date={olderPost.data.publishedAt} includeRelative={false} />
+              </p>
+              <p class="mt-2 max-h-0 overflow-hidden text-xs text-neutral-600 opacity-0 transition-all duration-200 group-hover:max-h-24 group-hover:opacity-100 dark:text-neutral-300">
+                {olderPost.data.summary}
+              </p>
+            </a>
+          ) : (
+            <div />
+          )}
+          {newerPost ? (
+            <a
+              href={`/blog/${getEntrySlug(newerPost.id)}`}
+              class="group rounded-lg border border-neutral-200 p-4 text-left transition-colors hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600"
+            >
+              <p class="text-sm font-medium text-neutral-900 transition-colors group-hover:text-black dark:text-neutral-100 dark:group-hover:text-white">{newerPost.data.title} &rarr;</p>
+              <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
+                <FormattedDate date={newerPost.data.publishedAt} includeRelative={false} />
+              </p>
+              <p class="mt-2 max-h-0 overflow-hidden text-xs text-neutral-600 opacity-0 transition-all duration-200 group-hover:max-h-24 group-hover:opacity-100 dark:text-neutral-300">
+                {newerPost.data.summary}
+              </p>
+            </a>
+          ) : (
+            <div />
+          )}
+        </div>
+      </nav>
+    )}
     <GlobalLightbox client:only="react" />
   </section>
 </Base>
