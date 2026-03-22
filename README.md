@@ -1,7 +1,7 @@
 <div align="center">
 
 [![License](https://img.shields.io/badge/license-MIT-blue)](#)
-[![Issues - matinhuseynzade.com](https://img.shields.io/github/issues/chillmatin/matinhuseynzade.com)](#)
+[![Issues - matinhuseynzade.com](https://img.shields.io/github/issues/chillmatin/matinhuseynzade.com)](https://github.com/chillmatin/matinhuseynzade.com/issues)
 [![GitHub Release](https://img.shields.io/github/v/tag/chillmatin/matinhuseynzade.com)](#)
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fmatinhuseynzade.com)](#)
 [![Astro](https://img.shields.io/badge/Astro-BC52EE?logo=astro&logoColor=fff)](#)
