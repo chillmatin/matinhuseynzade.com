@@ -20,7 +20,7 @@
 </div>
 
 <h3 align="center">
-  <a href="matinhuseynzade.com">matinhuseynzade.com</a>
+  <a href="https://www.matinhuseynzade.com">matinhuseynzade.com</a>
   <br/>
   Free and Open Source Blog Site
 </h3>
